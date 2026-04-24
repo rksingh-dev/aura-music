@@ -2,13 +2,33 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import {
+  Play,
+  Pause,
+  SkipBack,
+  SkipForward,
+  Shuffle,
+  Repeat,
+  Volume2,
+  VolumeX,
+  Mic2,
+  MonitorSpeaker,
+} from "lucide-react";
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type PlayerState = "idle" | "loading" | "playing" | "paused" | "error";
 
-interface AudioPlayerProps {
-  /** YouTube video ID to stream (e.g. "dQw4w9WgXcQ") */
+interface Track {
   videoId: string;
+  title: string;
+  channel: string;
+  thumbnail: string | null;
+}
+
+interface AudioPlayerProps {
+  /** Track to stream */
+  track: Track;
   /** Auto-play as soon as the URL is resolved */
   autoPlay?: boolean;
   /** Optional callback fired when playback starts */
@@ -30,12 +50,13 @@ declare global {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function AudioPlayer({
-  videoId,
+  track,
   autoPlay = true,
   onPlay,
   onError,
   onTimeUpdate,
 }: AudioPlayerProps) {
+  const videoId = track.videoId;
   const playerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -218,6 +239,7 @@ export default function AudioPlayer({
 
   // ── Format time helper ───────────────────────────────────────────────────────
   const formatTime = (seconds: number) => {
+    if (!seconds || isNaN(seconds)) return "0:00";
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs.toString().padStart(2, "0")}`;
@@ -228,107 +250,99 @@ export default function AudioPlayer({
   const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <div className="audio-player" role="region" aria-label="Audio Player">
+    <div className="player-bar" role="region" aria-label="Audio Player">
       {/* Hidden YouTube iframe */}
       <div ref={containerRef} style={{ display: "none" }} />
 
-      {/* Progress bar */}
-      <div className="audio-player__progress-container">
-        <input
-          type="range"
-          min="0"
-          max={duration || 0}
-          value={currentTime}
-          onChange={handleSeek}
-          className="audio-player__progress"
-          aria-label="Seek"
-        />
-        <div className="audio-player__progress-bar" style={{ width: `${progressPercent}%` }} />
+      {/* ── LEFT: Now Playing Info ── */}
+      <div className="player-bar__left">
+        {track.thumbnail ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={track.thumbnail} alt={track.title} className="player-bar__cover" />
+        ) : (
+          <div className="player-bar__cover-placeholder" />
+        )}
+        <div className="player-bar__info">
+          <div className="player-bar__title" title={track.title}>{track.title}</div>
+          <div className="player-bar__channel" title={track.channel}>{track.channel}</div>
+        </div>
       </div>
 
-      {/* Time display */}
-      <div className="audio-player__time">
-        <span className="audio-player__time-current">{formatTime(currentTime)}</span>
-        <span className="audio-player__time-separator">/</span>
-        <span className="audio-player__time-total">{formatTime(duration)}</span>
-      </div>
-
-      {/* Playback controls */}
-      <div className="audio-player__controls">
-        <button
-          className="audio-player__control-btn audio-player__control-btn--secondary"
-          onClick={handleToggleMute}
-          aria-label={volume === 0 ? "Unmute" : "Mute"}
-        >
-          {volume === 0 ? (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
-              <line x1="23" y1="9" x2="17" y2="15"></line>
-              <line x1="17" y1="9" x2="23" y2="15"></line>
-            </svg>
+      {/* ── CENTER: Playback & Progress ── */}
+      <div className="player-bar__center">
+        <div className="player-bar__controls-main">
+          <button className="player-btn-icon player-btn-secondary" aria-label="Shuffle">
+            <Shuffle size={16} />
+          </button>
+          <button className="player-btn-icon" aria-label="Previous">
+            <SkipBack size={20} fill="currentColor" />
+          </button>
+          
+          {playerState === "playing" ? (
+            <button className="player-btn-play" onClick={handlePause} aria-label="Pause">
+              <Pause size={20} fill="currentColor" />
+            </button>
           ) : (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-            </svg>
+            <button className="player-btn-play" onClick={handlePlay} aria-label="Play">
+              <Play size={20} fill="currentColor" />
+            </button>
           )}
-        </button>
 
+          <button className="player-btn-icon" aria-label="Next">
+            <SkipForward size={20} fill="currentColor" />
+          </button>
+          <button className="player-btn-icon player-btn-secondary" aria-label="Repeat">
+            <Repeat size={16} />
+          </button>
+        </div>
+
+        <div className="player-bar__progress-row">
+          <span className="player-time">{formatTime(currentTime)}</span>
+          <div className="progress-container">
+            <input
+              type="range"
+              min="0"
+              max={duration || 0}
+              value={currentTime}
+              onChange={handleSeek}
+              className="progress-slider"
+              aria-label="Seek"
+            />
+            <div className="progress-bg">
+              <div className="progress-fill" style={{ width: `${progressPercent}%` }} />
+            </div>
+          </div>
+          <span className="player-time">{formatTime(duration)}</span>
+        </div>
+      </div>
+
+      {/* ── RIGHT: Volume & Extras ── */}
+      <div className="player-bar__right">
+        <button className="player-btn-icon player-btn-secondary" aria-label="Lyrics" title="Lyrics">
+          <Mic2 size={16} />
+        </button>
+        <button className="player-btn-icon player-btn-secondary" aria-label="Devices" title="Devices">
+          <MonitorSpeaker size={16} />
+        </button>
+        <button className="player-btn-icon player-btn-secondary" onClick={handleToggleMute} aria-label={volume === 0 ? "Unmute" : "Mute"}>
+          {volume === 0 ? <VolumeX size={16} /> : <Volume2 size={16} />}
+        </button>
+        
+        <div className="volume-container">
         <input
           type="range"
           min="0"
           max="100"
           value={volume}
           onChange={handleVolumeChange}
-          className="audio-player__volume"
+          className="volume-slider"
           aria-label="Volume"
         />
-
-        {playerState === "paused" || playerState === "idle" ? (
-          <button
-            className="audio-player__control-btn audio-player__control-btn--primary"
-            onClick={handlePlay}
-            aria-label="Play"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-          </button>
-        ) : (
-          <button
-            className="audio-player__control-btn audio-player__control-btn--primary"
-            onClick={handlePause}
-            aria-label="Pause"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <rect x="6" y="4" width="4" height="16"></rect>
-              <rect x="14" y="4" width="4" height="16"></rect>
-            </svg>
-          </button>
-        )}
-      </div>
-
-      {/* Error display */}
-      {playerState === "error" && errorMessage && (
-        <div className="audio-player__error" role="alert">
-          <strong>⚠ {errorMessage}</strong>
+        <div className="volume-bg">
+          <div className="volume-fill" style={{ width: `${volume}%` }} />
         </div>
-      )}
-
-      {/* Debug info (remove in production) */}
-      {process.env.NODE_ENV === "development" && (
-        <details className="audio-player__debug">
-          <summary>Debug info (dev only)</summary>
-          <div style={{ fontSize: "0.75rem" }}>
-            <p>Video ID: {videoId}</p>
-            <p>State: {playerState}</p>
-            <p>API Ready: {isApiReady ? "Yes" : "No"}</p>
-            <p>Time: {formatTime(currentTime)} / {formatTime(duration)}</p>
-            <p>Volume: {volume}%</p>
-          </div>
-        </details>
-      )}
+      </div>
+      </div>
     </div>
   );
 }

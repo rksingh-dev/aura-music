@@ -167,40 +167,13 @@ export default function Home() {
 
       {/* ── Bottom Player Bar ── */}
       {activeTrack && (
-        <div className="player-bar">
-          <div className="player-bar__now-playing">
-            {activeTrack.thumbnail ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={activeTrack.thumbnail} alt={activeTrack.title} className="now-playing__img" />
-            ) : (
-              <div className="now-playing__img-placeholder"></div>
-            )}
-            <div className="now-playing__info">
-              <div className="now-playing__title">{activeTrack.title}</div>
-              <div className="now-playing__channel">{activeTrack.channel}</div>
-            </div>
-          </div>
-          
-          <div className="player-bar__controls">
-            <AudioPlayer
-              key={activeTrack.videoId}
-              videoId={activeTrack.videoId}
-              autoPlay
-              onPlay={() => console.log("▶ Playback started:", activeTrack.title)}
-              onError={(msg) => console.error("AudioPlayer error:", msg)}
-            />
-          </div>
-          
-          <div className="player-bar__extra">
-            <div className="player-bar__volume-indicator">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
-                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-              </svg>
-            </div>
-          </div>
-        </div>
+        <AudioPlayer
+          key={activeTrack.videoId}
+          track={activeTrack}
+          autoPlay
+          onPlay={() => console.log("▶ Playback started:", activeTrack.title)}
+          onError={(msg) => console.error("AudioPlayer error:", msg)}
+        />
       )}
     </div>
   );
