@@ -115,53 +115,53 @@ export default function Home() {
             </div>
           )}
 
-          {!searching && results.length === 0 && !searchError && (
-            <div className="empty-state">
-              <h2>Listen to your favorite music</h2>
-              <p>Search for songs, artists, or albums to start streaming instantly.</p>
-            </div>
-          )}
+           {!searching && results.length === 0 && !searchError && (
+             <div className="empty-state">
+               <h2>Listen to your favorite music</h2>
+               <p>Search for songs, artists, or albums to start streaming instantly.</p>
+             </div>
+           )}
 
-          {results.length > 0 && (
-            <section className="results-section">
-              <h2 className="section-title">Top Results</h2>
-              <div className="track-grid">
-                {results.map((track) => {
-                  const isActive = activeTrack?.videoId === track.videoId;
-                  return (
-                    <div 
-                      key={track.videoId} 
-                      className={`track-card ${isActive ? 'track-card--active' : ''}`}
-                      onClick={() => handlePlay(track)}
-                    >
-                      <div className="track-card__image-container">
-                        {track.thumbnail ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={track.thumbnail}
-                            alt={track.title}
-                            className="track-card__image"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="track-card__image-placeholder"></div>
-                        )}
-                        <button 
-                          className="track-card__play-btn"
-                          aria-label={`Play ${track.title}`}
-                          onClick={(e) => { e.stopPropagation(); handlePlay(track); }}
-                        >
-                          {isActive ? "⏸" : "▶"}
-                        </button>
-                      </div>
-                      <h3 className="track-card__title" title={track.title}>{track.title}</h3>
-                      <p className="track-card__channel">{track.channel}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
-          )}
+           {results.length > 0 && (
+             <section className="results-section">
+               <h2 className="section-title">Top picks</h2>
+               <div className="track-grid">
+                 {results.map((track) => {
+                   const isActive = activeTrack?.videoId === track.videoId;
+                   return (
+                     <div 
+                       key={track.videoId} 
+                       className={`track-card ${isActive ? 'track-card--active' : ''}`}
+                       onClick={() => handlePlay(track)}
+                     >
+                       <div className="track-card__image-container">
+                         {track.thumbnail ? (
+                           // eslint-disable-next-line @next/next/no-img-element
+                           <img
+                             src={track.thumbnail}
+                             alt={track.title}
+                             className="track-card__image"
+                             loading="lazy"
+                           />
+                         ) : (
+                           <div className="track-card__image-placeholder"></div>
+                         )}
+                         <button 
+                           className="track-card__play-btn"
+                           aria-label={`Play ${track.title}`}
+                           onClick={(e) => { e.stopPropagation(); handlePlay(track); }}
+                         >
+                           {isActive ? "⏸" : "▶"}
+                         </button>
+                       </div>
+                       <h3 className="track-card__title" title={track.title}>{track.title}</h3>
+                       <p className="track-card__channel">{track.channel}</p>
+                     </div>
+                   );
+                 })}
+               </div>
+              </section>
+            )}
         </div>
       </main>
 
