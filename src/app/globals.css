@@ -41,6 +41,13 @@ body {
   overflow: hidden;
 }
 
+/* Mobile-specific base styles */
+@media (max-width: 768px) {
+  body {
+    font-size: 13px;
+  }
+}
+
 /* ── App Container ───────────────────────────────────────────────────────────── */
 .app-container {
   display: flex;
@@ -270,6 +277,46 @@ body {
   letter-spacing: -0.02em;
 }
 
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.refresh-button {
+  background: var(--bg-card-hover);
+  border: none;
+  color: var(--text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all var(--transition);
+}
+
+.refresh-button:hover:not(:disabled) {
+  background: var(--bg-card-active);
+  color: var(--text-primary);
+  transform: rotate(180deg);
+}
+
+.refresh-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  animation: spin 1s linear infinite;
+}
+
+.last-updated {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
 .track-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -292,6 +339,33 @@ body {
 .track-card--active {
   background: var(--bg-card-active);
   border-left: 3px solid var(--accent);
+}
+
+.track-card--loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.track-card__loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.track-card__spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
 .track-card__image-container {
@@ -319,6 +393,14 @@ body {
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg, #333, #222);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.track-card__placeholder-icon {
+  font-size: 48px;
+  opacity: 0.5;
 }
 
 .track-card__play-btn {
@@ -691,7 +773,7 @@ body {
 
 /* ── Keyframes ──────────────────────────────────────────────────────────────── */
 @keyframes spin {
-  to { transform: translateY(-50%) rotate(360deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes fadeSlideIn {
@@ -762,4 +844,552 @@ body {
 
 button:focus:not(:focus-visible) {
   outline: none;
+}
+
+/* ── Mobile Responsive Styles ───────────────────────────────────────────────────── */
+
+/* Tablet and Mobile */
+@media (max-width: 1024px) {
+  /* Adjust track grid for tablets */
+  .track-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+  }
+  
+  /* Adjust player bar for tablets */
+  .player-bar__left {
+    min-width: 150px;
+    max-width: 250px;
+  }
+  
+  .player-bar__right {
+    min-width: 150px;
+    max-width: 250px;
+  }
+  
+  /* Adjust search bar for tablets */
+  .search-bar {
+    max-width: 300px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  /* Hide sidebar on mobile */
+  .sidebar {
+    display: none;
+  }
+  
+  /* Adjust main content for mobile */
+  .main-content {
+    padding-bottom: calc(var(--player-height) + 16px);
+  }
+  
+  .main-header {
+    padding: 0 16px;
+    height: 56px;
+    padding-top: calc(env(safe-area-inset-top) + 16px);
+  }
+  
+  .content-area {
+    padding: 16px;
+    padding-bottom: calc(var(--player-height) + 16px);
+  }
+  
+  /* Adjust search bar for mobile */
+  .search-bar {
+    max-width: 100%;
+  }
+  
+  .search-bar__input {
+    height: 40px;
+    font-size: 14px;
+    padding: 0 40px 0 40px;
+  }
+  
+  .search-bar__icon {
+    left: 12px;
+    width: 16px;
+    height: 16px;
+  }
+  
+  .search-bar__spinner {
+    right: 12px;
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Adjust track grid for mobile */
+  .track-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+  
+  .track-card {
+    padding: 12px;
+  }
+  
+  .track-card__image-container {
+    margin-bottom: 12px;
+  }
+  
+  .track-card__play-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+    bottom: 8px;
+    right: 8px;
+  }
+  
+  .track-card__title {
+    font-size: 0.8125rem;
+  }
+  
+  .track-card__channel {
+    font-size: 0.6875rem;
+  }
+  
+  /* Adjust section title for mobile */
+  .section-title {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+  }
+  
+  .section-header {
+    margin-bottom: 16px;
+  }
+  
+  .refresh-button {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+  
+  .last-updated {
+    font-size: 0.6875rem;
+    margin-bottom: 12px;
+  }
+  
+  /* Adjust player bar for mobile */
+  .player-bar {
+    height: 72px;
+    padding: 0 12px;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 12px);
+  }
+  
+  .player-bar__left {
+    width: 35%;
+    min-width: 120px;
+    max-width: 180px;
+    gap: 10px;
+  }
+  
+  .player-bar__cover {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .player-bar__cover-placeholder {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .player-bar__title {
+    font-size: 0.8125rem;
+  }
+  
+  .player-bar__channel {
+    font-size: 0.6875rem;
+  }
+  
+  .player-bar__center {
+    width: 30%;
+    gap: 4px;
+    padding: 0 8px;
+  }
+  
+  .player-bar__controls-main {
+    gap: 4px;
+  }
+  
+  .player-btn-icon {
+    padding: 6px;
+  }
+  
+  .player-btn-secondary {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .player-btn-play {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .player-bar__progress-row {
+    gap: 4px;
+  }
+  
+  .player-time {
+    font-size: 0.625rem;
+    min-width: 32px;
+  }
+  
+  .player-bar__right {
+    width: 35%;
+    min-width: 120px;
+    max-width: 180px;
+    gap: 4px;
+  }
+  
+  .volume-container {
+    width: 60px;
+    height: 10px;
+  }
+  
+  /* Adjust error banner for mobile */
+  .error-banner {
+    padding: 12px 14px;
+    font-size: 0.8125rem;
+    margin-bottom: 16px;
+  }
+  
+  /* Adjust empty state for mobile */
+  .empty-state h2 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+  
+  .empty-state p {
+    font-size: 0.875rem;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  /* Further adjust track grid for small mobile */
+  .track-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+  }
+  
+  .track-card {
+    padding: 10px;
+  }
+  
+  .track-card__play-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+  
+  /* Adjust player bar for small mobile */
+  .player-bar {
+    height: 68px;
+    padding: 0 8px;
+  }
+  
+  .player-bar__left {
+    width: 40%;
+    min-width: 100px;
+    max-width: 150px;
+    gap: 8px;
+  }
+  
+  .player-bar__cover {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .player-bar__cover-placeholder {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .player-bar__center {
+    width: 20%;
+    gap: 2px;
+    padding: 0 4px;
+  }
+  
+  .player-bar__controls-main {
+    gap: 2px;
+  }
+  
+  .player-btn-icon {
+    padding: 4px;
+  }
+  
+  .player-btn-secondary {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .player-btn-play {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .player-bar__right {
+    width: 40%;
+    min-width: 100px;
+    max-width: 150px;
+  }
+  
+  .volume-container {
+    width: 50px;
+  }
+  
+  /* Hide some player controls on very small screens */
+  .player-bar__right .player-btn-icon:not(:last-child) {
+    display: none;
+  }
+  
+  /* Adjust search bar for small mobile */
+  .search-bar__input {
+    height: 36px;
+    font-size: 13px;
+  }
+  
+  /* Adjust section title for small mobile */
+  .section-title {
+    font-size: 1.125rem;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  /* Adjust player bar for landscape */
+  .player-bar {
+    height: 60px;
+  }
+  
+  .player-bar__left {
+    min-width: 140px;
+  }
+  
+  .player-bar__right {
+    min-width: 140px;
+  }
+  
+  /* Adjust content for landscape */
+  .content-area {
+    padding: 12px 16px;
+  }
+  
+  .track-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+/* ── Mobile Menu Button ───────────────────────────────────────────────────── */
+.mobile-menu-button {
+  display: none;
+  position: fixed;
+  top: calc(env(safe-area-inset-top) + 12px);
+  left: 12px;
+  z-index: 1001;
+  background: var(--bg-card);
+  border: none;
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.mobile-menu-button:hover {
+  background: var(--bg-card-hover);
+  transform: scale(1.05);
+}
+
+.mobile-menu-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ── Mobile Menu Overlay ─────────────────────────────────────────────────── */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+
+.mobile-menu-overlay--active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Mobile Bottom Navigation ─────────────────────────────────────────────── */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-sidebar);
+  border-top: 1px solid var(--border);
+  padding: 8px 0 calc(env(safe-area-inset-bottom) + 8px);
+  z-index: 998;
+  display: none;
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 8px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition);
+  flex: 1;
+}
+
+.mobile-nav-item:hover {
+  color: var(--text-primary);
+  background: var(--bg-card-hover);
+}
+
+.mobile-nav-item--active {
+  color: var(--text-primary);
+}
+
+.mobile-nav-item--active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 0 0 2px 2px;
+}
+
+.mobile-nav-item span {
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+
+.mobile-nav-item svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ── Mobile Responsive Styles ───────────────────────────────────────────────────── */
+
+/* Show mobile menu button and bottom nav on mobile */
+@media (max-width: 768px) {
+  .mobile-menu-button {
+    display: flex;
+  }
+  
+  .mobile-menu-overlay {
+    display: block;
+  }
+  
+  .mobile-bottom-nav {
+    display: flex;
+  }
+  
+  /* Prevent body scroll when mobile menu is open */
+  body:has(.sidebar--mobile-open) {
+    overflow: hidden;
+  }
+  
+  /* Adjust main content to account for mobile menu button */
+  .main-header {
+    padding-left: 60px;
+  }
+  
+  /* Adjust search bar for mobile to not overlap with menu button */
+  .search-bar {
+    margin-left: 0;
+  }
+  
+  /* Mobile sidebar styles */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform var(--transition-slow);
+    width: 280px;
+    max-width: 85vw;
+  }
+  
+  .sidebar--mobile-open {
+    transform: translateX(0);
+  }
+  
+  /* Adjust content area for mobile bottom nav */
+  .content-area {
+    padding-bottom: calc(var(--player-height) + 80px);
+  }
+  
+  .main-content {
+    padding-bottom: calc(var(--player-height) + 80px);
+  }
+  
+  /* Better touch targets for mobile */
+  .track-card {
+    min-height: auto;
+  }
+  
+  .track-card__play-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .player-btn-icon {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .refresh-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  /* Improve tap targets on mobile */
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Better spacing for touch */
+  .track-card {
+    padding: 12px;
+  }
+  
+  .section-header {
+    gap: 12px;
+  }
+}
+
+/* Adjust for when player is active on mobile */
+@media (max-width: 768px) {
+  .app-container:has(.player-bar) .content-area {
+    padding-bottom: calc(var(--player-height) + 80px);
+  }
+  
+  .app-container:has(.player-bar) .main-content {
+    padding-bottom: calc(var(--player-height) + 80px);
+  }
 }

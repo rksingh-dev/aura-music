@@ -24,6 +24,9 @@ interface Track {
   title: string;
   channel: string;
   thumbnail: string | null;
+  billboardRank?: string;
+  billboardTitle?: string;
+  billboardArtist?: string;
 }
 
 interface AudioPlayerProps {
