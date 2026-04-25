@@ -71,20 +71,12 @@ export default function Home() {
       <aside className="sidebar">
         <div className="sidebar__logo">
           <span className="sidebar__logo-icon">▶</span>
-          <h2>Aura Music</h2>
+          <h2>rks</h2>
         </div>
         <nav className="sidebar__nav">
           <a href="#" className="sidebar__link sidebar__link--active">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             Home
-          </a>
-          <a href="#" className="sidebar__link" onClick={() => inputRef.current?.focus()}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-            Search
-          </a>
-          <a href="#" className="sidebar__link">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 6v6"></path><path d="M15 6v6"></path><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"></path></svg>
-            Your Library
           </a>
         </nav>
       </aside>
@@ -126,42 +118,42 @@ export default function Home() {
              <section className="results-section">
                <h2 className="section-title">Top picks</h2>
                <div className="track-grid">
-                 {results.map((track) => {
-                   const isActive = activeTrack?.videoId === track.videoId;
-                   return (
-                     <div 
-                       key={track.videoId} 
-                       className={`track-card ${isActive ? 'track-card--active' : ''}`}
-                       onClick={() => handlePlay(track)}
-                     >
-                       <div className="track-card__image-container">
-                         {track.thumbnail ? (
-                           // eslint-disable-next-line @next/next/no-img-element
-                           <img
-                             src={track.thumbnail}
-                             alt={track.title}
-                             className="track-card__image"
-                             loading="lazy"
-                           />
-                         ) : (
-                           <div className="track-card__image-placeholder"></div>
-                         )}
-                         <button 
-                           className="track-card__play-btn"
-                           aria-label={`Play ${track.title}`}
-                           onClick={(e) => { e.stopPropagation(); handlePlay(track); }}
-                         >
-                           {isActive ? "⏸" : "▶"}
-                         </button>
-                       </div>
-                       <h3 className="track-card__title" title={track.title}>{track.title}</h3>
-                       <p className="track-card__channel">{track.channel}</p>
-                     </div>
-                   );
-                 })}
-               </div>
-              </section>
-            )}
+                {results.map((track) => {
+                  const isActive = activeTrack?.videoId === track.videoId;
+                  return (
+                    <div 
+                      key={track.videoId} 
+                      className={`track-card ${isActive ? 'track-card--active' : ''}`}
+                      onClick={() => handlePlay(track)}
+                    >
+                      <div className="track-card__image-container">
+                        {track.thumbnail ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={track.thumbnail}
+                            alt={track.title}
+                            className="track-card__image"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="track-card__image-placeholder"></div>
+                        )}
+                        <button 
+                          className="track-card__play-btn"
+                          aria-label={`Play ${track.title}`}
+                          onClick={(e) => { e.stopPropagation(); handlePlay(track); }}
+                        >
+                          {isActive ? "⏸" : "▶"}
+                        </button>
+                      </div>
+                      <h3 className="track-card__title" title={track.title}>{track.title}</h3>
+                      <p className="track-card__channel">{track.channel}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          )}
         </div>
       </main>
 

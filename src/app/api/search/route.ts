@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     const searchQuery = `${query.trim()} audio`;
     const results = await playdl.search(searchQuery, {
       source: { youtube: "video" },
-      limit: 50,
+      limit: 10,
     });
 
     if (!results || results.length === 0) {
