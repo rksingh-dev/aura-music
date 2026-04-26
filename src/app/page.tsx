@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect } from "react";
 import { usePlayer } from "@/app/lib/PlayerContext";
 // AudioPlayer moved to global player bar
 
@@ -275,36 +275,6 @@ fetchTopTracks();
     // Fallback: play whatever we have (may be missing videoId)
     setActiveTrack(track);
   };
-
-  // ── Play next track when current ends ────────────────────────────────────────
-  const playNextTrack = useCallback(() => {
-    if (!activeTrack) return;
-    const list = (() => {
-      switch (chartMode) {
-        case 'india': return indiaTopSongs;
-        case 'global': return globalTopSongs;
-        case 'usa': return usaTopSongs;
-        case 'billboard': return trending;
-        case 'rks': return rksTopSongs;
-        default: return [];
-      }
-    })();
-    const currentIndex = list.findIndex(t => t.videoId && t.videoId === activeTrack.videoId);
-    if (currentIndex >= 0 && currentIndex < list.length - 1) {
-      const nextTrack = list[currentIndex + 1];
-      // Initiate playback of next track (will fetch videoId if needed)
-      handlePlay(nextTrack);
-    }
-  }, [activeTrack, chartMode, indiaTopSongs, globalTopSongs, usaTopSongs, trending, rksTopSongs]);
-
-  // Listen for track-ended custom event from AudioPlayer
-  useEffect(() => {
-    const onEnded = () => {
-      playNextTrack();
-    };
-    window.addEventListener('track-ended', onEnded);
-    return () => window.removeEventListener('track-ended', onEnded);
-  }, [playNextTrack]);
 
   // ── Handle image load errors ─────────────────────────────────────────────────
   const handleImageError = (trackKey: string) => {

@@ -129,16 +129,10 @@ export default function AudioPlayer({
             stopProgressUpdate();
           } else if (state === window.YT.PlayerState.BUFFERING) {
             setPlayerState("loading");
-} else if (state === window.YT.PlayerState.ENDED) {
-          setPlayerState("paused");
-          stopProgressUpdate();
-          // Notify the app that the track has finished
-          try {
-            window.dispatchEvent(new Event('track-ended'));
-          } catch (e) {
-            console.error('Failed to dispatch track-ended event', e);
-          }
-        } else if (state === window.YT.PlayerState.CUED) {
+          } else if (state === window.YT.PlayerState.ENDED) {
+            setPlayerState("paused");
+            stopProgressUpdate();
+          } else if (state === window.YT.PlayerState.CUED) {
             setPlayerState("idle");
           }
         },
