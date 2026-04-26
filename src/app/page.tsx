@@ -4,6 +4,59 @@ import { useRef, useState, useEffect } from "react";
 import { usePlayer } from "@/app/lib/PlayerContext";
 // AudioPlayer moved to global player bar
 
+// ─── RKS Chart Data ────────────────────────────────────────────────────────
+const rksChart: Track[] = [
+  { videoId: "", title: "Is There Someone Else? — The Weeknd", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Open Hearts — The Weeknd", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "bargad — sufr, Arpit Bala, toorjo dey", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "PILLOWTALK — ZAYN", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Haseen — Talwiinder, NDS, Rippy Grewal", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Khayaal — Talwiinder, NDS", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Tu — Talwiinder, Sanjoy", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "I Wonder — Kanye West", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Maharani — Karun, Lambo Drive, Arpit Bala, GHIL...", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "NIGHTS LIKE THIS — The Kid LAROI", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Gallan 4 — Talwiinder", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Labon Ko — Pritam, KK, Sayeed Quadri", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Tere Liye — Atif Aslam, Shreya Ghoshal, Sachin G...", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Tu Hi Meri Shab Hai — Pritam, KK", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "3 Nights — Dominic Fike", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "GOSSIP (feat. Tom Morello) — Måneskin, Tom Morello", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "I WANNA BE YOUR SLAVE — Måneskin", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Beggin' — Måneskin", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "SAD GIRLZ LUV MONEY Remix — Amaarae, Kali Uchis, MOLIY", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "End of Beginning — Djo", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Gata Only — FloyyMenor, Cris MJ", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "One Dance — Drake, Wizkid, Kyla", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Antisocial (with Travis Scott) — Ed Sheeran, Travis Scott, Steel Banglez, Zeph Ellis", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Baptized In Fear — The Weeknd", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Pray For Me — The Weeknd, Kendrick Lamar", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "TKN (feat. Travis Scott) — ROSALÍA, Travis Scott", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "fat funny friend (sped up) — daddy's girl, creamy, 11:11 Music Group", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "GIRLS — The Kid LAROI", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "I Wanna Be Yours — Arctic Monkeys", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Jimmy Cooks (feat. 21 Savage) — Drake, 21 Savage", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Say Yes To Heaven — Lana Del Rey", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "God's Plan — Drake", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Radio — Lana Del Rey", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Diet Mountain Dew — Lana Del Rey", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "STAR WALKIN' — Lil Nas X", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "INDUSTRY BABY — Lil Nas X, Jack Harlow", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "MONTERO (Call Me By Your Name) — Lil Nas X", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Sweater Weather — The Neighbourhood", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Good In Goodbye — Madison Beer", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Swimming Pools (Drank) — Kendrick Lamar", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Heartless — Kanye West", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Heathens — Twenty One Pilots", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Lover — Taylor Swift", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "The Search — NF", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "Agora Hills — Doja Cat", channel: "", duration: "?", thumbnail: null },
+  { videoId: "", title: "West Coast — Lana Del Rey ", channel: "", duration: "?", thumbnail: null },
+];
+
+// Initialize RKS top songs state later
+
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface Track {
@@ -39,7 +92,7 @@ export default function Home() {
   const [refreshing, setRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [chartMode, setChartMode] = useState<'billboard' | 'india' | 'global' | 'usa'>('global');
+  const [chartMode, setChartMode] = useState<'billboard' | 'india' | 'global' | 'usa' | 'rks'>('global');
   const [refreshingIndia, setRefreshingIndia] = useState(false);
   const [indiaLastUpdated, setIndiaLastUpdated] = useState<string | null>(null);
   const [refreshingGlobal, setRefreshingGlobal] = useState(false);
@@ -47,6 +100,7 @@ export default function Home() {
   const [refreshingUsa, setRefreshingUsa] = useState(false);
   const [usaLastUpdated, setUsaLastUpdated] = useState<string | null>(null);
   const [usaTopSongs, setUsaTopSongs] = useState<Track[]>([]);
+  const [rksTopSongs, setRksTopSongs] = useState<Track[]>([]);
 
   // Fetch India top songs from YouTube Charts
   const fetchIndiaTopSongs = async (refresh = false) => {
@@ -133,9 +187,16 @@ export default function Home() {
       }
     };
 
-    fetchTopTracks();
-    fetchIndiaTopSongs(); fetchGlobalTopSongs(); fetchUsaTopSongs();
-  }, []);
+fetchTopTracks();
+      fetchIndiaTopSongs(); fetchGlobalTopSongs(); fetchUsaTopSongs();
+    }, []);
+
+    // Load RKS chart data when selected
+    useEffect(() => {
+      if (chartMode === 'rks') {
+        setRksTopSongs(rksChart);
+      }
+    }, [chartMode]);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -162,7 +223,7 @@ export default function Home() {
         setSearchError(data.error ?? "Search failed. Please try again.");
         return;
       }
-      setResults(data.tracks);
+      setResults(Array.from(new Map(data.tracks.map(t => [t.title.toLowerCase(), t])).values())); // deduplicate by title
     } catch {
       setSearchError("Network error — could not reach the search API.");
     } finally {
@@ -172,36 +233,46 @@ export default function Home() {
 
   // ── Play a track ──────────────────────────────────────────────────────────
   const handlePlay = async (track: Track) => {
-    // If track doesn't have a videoId (Billboard track), fetch it first
-    if (!track.videoId && track.billboardTitle && track.billboardArtist) {
-      const trackKey = track.billboardTitle + track.billboardArtist;
-      setLoadingTrack(trackKey);
-      
-      try {
-        const res = await fetch(`/api/youtube-search?title=${encodeURIComponent(track.billboardTitle)}&artist=${encodeURIComponent(track.billboardArtist)}`);
-        const data = await res.json();
-        
-        if (res.ok && data.videoId) {
-          // Update the track with the YouTube video ID
-          const updatedTrack = {
-            ...track,
-            videoId: data.videoId,
-            title: data.title,
-            channel: data.channel,
-            duration: data.duration,
-            thumbnail: data.thumbnail || track.thumbnail
-          };
-          setActiveTrack(updatedTrack);
-          setLoadingTrack(null);
-          return;
+    // If track doesn't have a videoId, attempt to fetch it from YouTube
+    if (!track.videoId) {
+      // Try Billboard style fields first
+      if (track.billboardTitle && track.billboardArtist) {
+        const trackKey = track.billboardTitle + track.billboardArtist;
+        setLoadingTrack(trackKey);
+        try {
+          const res = await fetch(`/api/youtube-search?title=${encodeURIComponent(track.billboardTitle)}&artist=${encodeURIComponent(track.billboardArtist)}`);
+          const data = await res.json();
+          if (res.ok && data.videoId) {
+            const updatedTrack = { ...track, videoId: data.videoId, title: data.title, channel: data.channel, duration: data.duration, thumbnail: data.thumbnail || track.thumbnail };
+            setActiveTrack(updatedTrack);
+            setLoadingTrack(null);
+            return;
+          }
+        } catch (err) {
+          console.error("Error fetching YouTube video (Billboard):", err);
         }
-      } catch (err) {
-        console.error("Error fetching YouTube video:", err);
+        setLoadingTrack(null);
+      } else if (track.title.includes('—')) {
+        // Generic format: "Title — Artist"
+        const [rawTitle, rawArtist] = track.title.split('—').map(s => s.trim());
+        const trackKey = rawTitle + rawArtist;
+        setLoadingTrack(trackKey);
+        try {
+          const res = await fetch(`/api/youtube-search?title=${encodeURIComponent(rawTitle)}&artist=${encodeURIComponent(rawArtist)}`);
+          const data = await res.json();
+          if (res.ok && data.videoId) {
+            const updatedTrack = { ...track, videoId: data.videoId, title: data.title, channel: data.channel, duration: data.duration, thumbnail: data.thumbnail || track.thumbnail };
+            setActiveTrack(updatedTrack);
+            setLoadingTrack(null);
+            return;
+          }
+        } catch (err) {
+          console.error("Error fetching YouTube video (RKS):", err);
+        }
+        setLoadingTrack(null);
       }
-      
-      setLoadingTrack(null);
     }
-    
+    // Fallback: play whatever we have (may be missing videoId)
     setActiveTrack(track);
   };
 
@@ -303,12 +374,18 @@ export default function Home() {
             >
               USA
             </button>
-            <button
-              className={`toggle-button ${chartMode === 'billboard' ? 'active' : ''}`}
-              onClick={() => setChartMode('billboard')}
-            >
-              Billboard
-            </button>
+<button
+          className={`toggle-button ${chartMode === 'billboard' ? 'active' : ''}`}
+          onClick={() => setChartMode('billboard')}
+        >
+          Billboard
+        </button>
+        <button
+          className={`toggle-button ${chartMode === 'rks' ? 'active' : ''}`}
+          onClick={() => setChartMode('rks')}
+        >
+          RKS
+        </button>
           </div>
         </header>
 
@@ -381,7 +458,7 @@ export default function Home() {
                             )}
                           </div>
                           <h3 className="track-card__title" title={track.title}>{track.title}</h3>
-                          <p className="track-card__channel">{track.channel}</p>
+                          
                         </div>
                       );
                     })}
@@ -448,7 +525,7 @@ export default function Home() {
                             )}
                           </div>
                           <h3 className="track-card__title" title={track.title}>{track.title}</h3>
-                          <p className="track-card__channel">{track.channel}</p>
+                          
                         </div>
                       );
                     })}
@@ -510,7 +587,7 @@ export default function Home() {
                             )}
                           </div>
                           <h3 className="track-card__title" title={track.title}>{track.title}</h3>
-                          <p className="track-card__channel">{track.channel}</p>
+                          
                         </div>
                       );
                     })}
@@ -572,7 +649,7 @@ export default function Home() {
                             )}
                           </div>
                           <h3 className="track-card__title" title={track.title}>{track.title}</h3>
-                          <p className="track-card__channel">{track.channel}</p>
+                          
                         </div>
                       );
                     })}
@@ -624,15 +701,43 @@ export default function Home() {
                          >
                            {isActive ? "⏸" : "▶"}
                          </button>
-                       </div>
-                       <h3 className="track-card__title" title={track.title}>{track.title}</h3>
-                       <p className="track-card__channel">{track.channel}</p>
-                     </div>
+</div>
+<h3 className="track-card__title" title={track.title}>{track.title}</h3>
+<p className="track-card__channel">{track.channel}</p>
+</div>
                    );
                  })}
               </div>
-            </section>
-          )}
+                </section>
+               )}
+              {chartMode === 'rks' && rksTopSongs.length > 0 && (
+                <section className="results-section">
+                  <div className="section-header">
+                    <h2 className="section-title">RKS Chart</h2>
+                  </div>
+                  <div className="track-grid">
+                    {rksTopSongs.map((track, index) => {
+                      const isActive = activeTrack?.videoId === track.videoId;
+                      const uniqueKey = track.title + index;
+                      return (
+                        <div
+                          key={uniqueKey}
+                          className={`track-card ${isActive ? 'track-card--active' : ''}`}
+                          onClick={() => handlePlay(track)}
+                        >
+                          <div className="track-card__image-container">
+                            <div className="track-card__image-placeholder"><div className="track-card__placeholder-icon">🎵</div></div>
+                            <button className="track-card__play-btn" aria-label={`Play ${track.title}`} onClick={(e) => { e.stopPropagation(); handlePlay(track); }}>
+                              {isActive ? "⏸" : "▶"}
+                            </button>
+                          </div>
+                          <h3 className="track-card__title" title={track.title}>{track.title}</h3>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
         </div>
       </main>
 
