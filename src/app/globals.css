@@ -23,7 +23,7 @@
   --transition-slow: 0.3s ease;
   
   --player-height: 90px;
-  --sidebar-width:  280px;
+  --sidebar-width:  200px;
 }
 
 /* ── Reset & base ───────────────────────────────────────────────────────────── */
@@ -440,6 +440,33 @@ body {
   transform: scale(1);
   background: var(--accent);
 }
+
+/* Back button styling */
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  font-weight: 600;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.back-button:hover {
+  background: var(--bg-card-hover);
+}
+
+.back-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 
 .track-card__title {
   font-weight: 700;
