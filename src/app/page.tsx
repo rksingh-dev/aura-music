@@ -238,7 +238,7 @@ export default function Home() {
                     {trending.map((track, index) => {
                       const isActive = activeTrack?.videoId === track.videoId;
                       const uniqueKey = track.videoId || `${track.title}-${track.channel}-${index}`;
-                      const isLoading = loadingTrack === (track.billboardTitle + track.billboardArtist);
+                      const isLoading = loadingTrack === `${track.billboardTitle || ''}${track.billboardArtist || ''}`;
                       const hasImageError = imageErrors.has(uniqueKey);
                       const showImage = track.thumbnail && !hasImageError && !isLoading;
                       
@@ -249,20 +249,20 @@ export default function Home() {
                           onClick={() => !isLoading && handlePlay(track)}
                         >
                           <div className="track-card__image-container">
-                            {isLoading ? (
-                              <div className="track-card__loading-overlay">
-                                <span className="track-card__spinner"></span>
-                              </div>
-                            ) : showImage ? (
-                              // eslint-disable-next-line @next/next/no-img-element
-                              <img
-                                src={track.thumbnail}
-                                alt={track.title}
-                                className="track-card__image"
-                                loading="lazy"
-                                onError={() => handleImageError(uniqueKey)}
-                              />
-                            ) : (
+{isLoading ? (
+  <div className="track-card__loading-overlay">
+    <span className="track-card__spinner"></span>
+  </div>
+) : showImage && track.thumbnail ? (
+  // eslint-disable-next-line @next/next/no-img-element
+  <img
+    src={track.thumbnail}
+    alt={track.title}
+    className="track-card__image"
+    loading="lazy"
+    onError={() => handleImageError(uniqueKey)}
+  />
+) : (
                               <div className="track-card__image-placeholder">
                                 <div className="track-card__placeholder-icon">🎵</div>
                               </div>
@@ -306,16 +306,16 @@ export default function Home() {
                         onClick={() => handlePlay(track)}
                       >
                        <div className="track-card__image-container">
-                         {showImage ? (
-                           // eslint-disable-next-line @next/next/no-img-element
-                           <img
-                             src={track.thumbnail}
-                             alt={track.title}
-                             className="track-card__image"
-                             loading="lazy"
-                             onError={() => handleImageError(uniqueKey)}
-                           />
-                         ) : (
+{showImage && track.thumbnail ? (
+  // eslint-disable-next-line @next/next/no-img-element
+  <img
+    src={track.thumbnail}
+    alt={track.title}
+    className="track-card__image"
+    loading="lazy"
+    onError={() => handleImageError(uniqueKey)}
+  />
+) : (
                            <div className="track-card__image-placeholder">
                              <div className="track-card__placeholder-icon">🎵</div>
                            </div>

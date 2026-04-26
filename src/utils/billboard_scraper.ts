@@ -8,7 +8,7 @@ export async function parseBillboardHot100() {
     const response = await axios.get(url);
     const $ = cheerio.load(response.data);
     
-    const songs = [];
+    const songs: { rank: string; thumbnail: string; title: string; artist: string }[] = [];
     
     // Target the chart list items - based on actual HTML structure
     $('.o-chart-results-list-row').each((index, element) => {
