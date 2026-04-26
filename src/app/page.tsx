@@ -286,10 +286,10 @@ export default function Home() {
           {/* Chart mode toggle */}
           <div className="chart-mode-toggle">
             <button
-              className={`toggle-button ${chartMode === 'billboard' ? 'active' : ''}`}
-              onClick={() => setChartMode('billboard')}
+              className={`toggle-button ${chartMode === 'global' ? 'active' : ''}`}
+              onClick={() => setChartMode('global')}
             >
-              Billboard
+              Global
             </button>
             <button
               className={`toggle-button ${chartMode === 'india' ? 'active' : ''}`}
@@ -298,16 +298,16 @@ export default function Home() {
               India
             </button>
             <button
-              className={`toggle-button ${chartMode === 'global' ? 'active' : ''}`}
-              onClick={() => setChartMode('global')}
-            >
-              Global
-            </button>
-            <button
               className={`toggle-button ${chartMode === 'usa' ? 'active' : ''}`}
               onClick={() => setChartMode('usa')}
             >
               USA
+            </button>
+            <button
+              className={`toggle-button ${chartMode === 'billboard' ? 'active' : ''}`}
+              onClick={() => setChartMode('billboard')}
+            >
+              Billboard
             </button>
           </div>
         </header>
