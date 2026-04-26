@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { usePlayer } from "@/app/lib/PlayerContext";
 // AudioPlayer moved to global player bar
 
