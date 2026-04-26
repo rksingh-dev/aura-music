@@ -468,26 +468,28 @@ body {
 }
 
 
-.track-card__title {
-  font-weight: 700;
-  font-size: 0.875rem;
-  margin-bottom: 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--text-primary);
-  line-height: 1.3;
-}
+  .track-card__title {
+    font-weight: 700;
+    font-size: 0.875rem;
+    margin-bottom: 4px;
+    /* Allow full title to display */
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
 
-.track-card__channel {
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.3;
-}
+  .track-card__channel {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    /* Allow full channel name */
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    line-height: 1.3;
+  }
 
 /* ── Bottom Player Bar (Spotify Clone) ─────────────────────────────────────── */
 .player-bar {
