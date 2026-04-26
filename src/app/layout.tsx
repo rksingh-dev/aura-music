@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   description: "Music streaming app",
 };
 
+import { PlayerProvider } from "./lib/PlayerContext";
+import { PlayerBar } from "./lib/PlayerBar";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,7 +30,12 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <PlayerProvider>
+          {children}
+          <PlayerBar />
+        </PlayerProvider>
+      </body>
     </html>
   );
 }
