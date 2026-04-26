@@ -133,6 +133,14 @@ export default function Home() {
       }
     };
 
+
+
+
+
+
+
+
+
     fetchTopTracks();
     fetchIndiaTopSongs(); fetchGlobalTopSongs(); fetchUsaTopSongs();
   }, []);
@@ -190,7 +198,10 @@ export default function Home() {
             channel: data.channel,
             duration: data.duration,
             thumbnail: data.thumbnail || track.thumbnail
-          };
+};
+
+
+
           setActiveTrack(updatedTrack);
           setLoadingTrack(null);
           return;
@@ -206,9 +217,19 @@ export default function Home() {
   };
 
   // ── Handle image load errors ─────────────────────────────────────────────────
-  const handleImageError = (trackKey: string) => {
+   const handleImageError = (trackKey: string) => {
     setImageErrors(prev => new Set([...prev, trackKey]));
-  };
+   };
+
+   // ── Refresh all data ────────────────────────────────────────────────────
+   const handleRefreshAll = async () => {
+     await Promise.all([
+       handleRefresh(),
+       fetchIndiaTopSongs(true),
+       fetchGlobalTopSongs(true),
+       fetchUsaTopSongs(true),
+     ]);
+   };
 
   // ── Refresh Billboard data ───────────────────────────────────────────────────
   const handleRefresh = async () => {
@@ -254,7 +275,7 @@ export default function Home() {
 
       {/* ── Sidebar ── */}
       <aside className={`sidebar ${mobileMenuOpen ? 'sidebar--mobile-open' : ''}`}>
-        <a href="/" className="sidebar__logo">
+        <a href="/" className="sidebar__logo" onClick={(e) => { e.preventDefault(); handleRefreshAll(); }}>
           <span className="sidebar__logo-icon">▶</span>
           <h2>rks</h2>
         </a>
