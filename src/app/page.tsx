@@ -84,145 +84,73 @@ export default function Home() {
   const [searching,   setSearching]   = useState(false);
   const [searchError, setSearchError] = useState("");
   const { activeTrack, setActiveTrack } = usePlayer();
-  const [trending, setTrending] = useState<Track[]>([]);
-  const [indiaTopSongs, setIndiaTopSongs] = useState<Track[]>([]);
-  const [globalTopSongs, setGlobalTopSongs] = useState<Track[]>([]);
+
+  const [chartMode, setChartMode] = useState<string>('global');
+  
+  const PLAYLIST_CATEGORIES = [
+    { id: 'global', label: 'Global', endpoint: '/api/youtube-global', isStatic: false },
+    { id: 'india', label: 'India', endpoint: '/api/youtube-india', isStatic: false },
+    { id: 'usa', label: 'USA', endpoint: '/api/youtube-usa', isStatic: false },
+    { id: 'bollywood', label: 'Bollywood', endpoint: '/api/playlist?id=RDCLAK5uy_n9Fbdw7e6ap-98_A-8JYBmPv64v-Uaq1g', isStatic: false },
+    { id: 'billboard', label: 'Billboard', endpoint: '/api/search', isStatic: false },
+    { id: 'rks', label: 'RKS', endpoint: '', isStatic: true },
+  ];
+
+  type PlaylistData = { tracks: Track[]; lastUpdated: string | null; };
+  const [playlistsData, setPlaylistsData] = useState<Record<string, PlaylistData>>({});
+  const [refreshingCat, setRefreshingCat] = useState<string | null>(null);
   const [loadingTrack, setLoadingTrack] = useState<string | null>(null);
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
-  const [refreshing, setRefreshing] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [chartMode, setChartMode] = useState<'billboard' | 'india' | 'global' | 'usa' | 'rks' | 'bollywood'>('global');
-  const [refreshingIndia, setRefreshingIndia] = useState(false);
-  const [indiaLastUpdated, setIndiaLastUpdated] = useState<string | null>(null);
-  const [refreshingGlobal, setRefreshingGlobal] = useState(false);
-  const [globalLastUpdated, setGlobalLastUpdated] = useState<string | null>(null);
-  const [refreshingUsa, setRefreshingUsa] = useState(false);
-  const [usaLastUpdated, setUsaLastUpdated] = useState<string | null>(null);
-  const [usaTopSongs, setUsaTopSongs] = useState<Track[]>([]);
-  const [rksTopSongs, setRksTopSongs] = useState<Track[]>([]);
-  const [refreshingBollywood, setRefreshingBollywood] = useState(false);
-  const [bollywoodLastUpdated, setBollywoodLastUpdated] = useState<string | null>(null);
-  const [bollywoodTopSongs, setBollywoodTopSongs] = useState<Track[]>([]);
 
-  // Fetch India top songs from YouTube Charts
-  const fetchIndiaTopSongs = async (refresh = false) => {
-    if (refresh) setRefreshingIndia(true);
-    try {
-      const url = refresh ? `/api/youtube-india?refresh=true&t=${Date.now()}` : "/api/youtube-india";
-      const res = await fetch(url, { cache: 'no-store' });
-      const data = await res.json();
-      if (res.ok && data.tracks) {
-        setIndiaTopSongs(data.tracks);
-        if (!data.cached || refresh) {
-          setIndiaLastUpdated(new Date().toLocaleString());
-        }
-      } else {
-        console.error("Failed to fetch India top songs:", data.error);
+  const fetchCategory = async (catId: string, refresh = false) => {
+    const cat = PLAYLIST_CATEGORIES.find(c => c.id === catId);
+    if (!cat) return;
+    
+    if (cat.isStatic) {
+      if (catId === 'rks') {
+        setPlaylistsData(prev => ({ ...prev, [catId]: { tracks: rksChart, lastUpdated: new Date().toLocaleString() } }));
       }
-    } catch (err) {
-      console.error("Network error while fetching India top songs:", err);
-    } finally {
-      if (refresh) setRefreshingIndia(false);
+      return;
     }
-  };
 
-  // Fetch Global top songs from YouTube Charts
-  const fetchGlobalTopSongs = async (refresh = false) => {
-    if (refresh) setRefreshingGlobal(true);
+    setRefreshingCat(catId);
     try {
-      const url = refresh ? `/api/youtube-global?refresh=true&t=${Date.now()}` : "/api/youtube-global";
-      const res = await fetch(url, { cache: 'no-store' });
+      const url = new URL(cat.endpoint, window.location.origin);
+      if (refresh) {
+        url.searchParams.set('refresh', 'true');
+        url.searchParams.set('t', Date.now().toString());
+      }
+      const res = await fetch(url.toString(), { cache: 'no-store' });
       const data = await res.json();
       if (res.ok && data.tracks) {
-        setGlobalTopSongs(data.tracks);
-        if (!data.cached || refresh) {
-          setGlobalLastUpdated(new Date().toLocaleString());
-        }
+        setPlaylistsData(prev => ({
+          ...prev,
+          [catId]: {
+            tracks: data.tracks,
+            lastUpdated: refresh || !data.cached ? new Date().toLocaleString() : prev[catId]?.lastUpdated || null
+          }
+        }));
       } else {
-        console.error("Failed to fetch Global top songs:", data.error);
+        console.error(`Failed to fetch ${catId}:`, data.error);
       }
     } catch (err) {
-      console.error("Network error while fetching Global top songs:", err);
+      console.error(`Network error while fetching ${catId}:`, err);
     } finally {
-      if (refresh) setRefreshingGlobal(false);
-    }
-  };
-
-  // Load static trending tracks on mount
-  // Fetch USA top songs from YouTube Charts
-  const fetchUsaTopSongs = async (refresh = false) => {
-    if (refresh) setRefreshingUsa(true);
-    try {
-      const url = refresh ? `/api/youtube-usa?refresh=true&t=${Date.now()}` : "/api/youtube-usa";
-      const res = await fetch(url, { cache: 'no-store' });
-      const data = await res.json();
-      if (res.ok && data.tracks) {
-        setUsaTopSongs(data.tracks);
-        if (!data.cached || refresh) {
-          setUsaLastUpdated(new Date().toLocaleString());
-        }
-      } else {
-        console.error("Failed to fetch USA top songs:", data.error);
-      }
-    } catch (err) {
-      console.error("Network error while fetching USA top songs:", err);
-    } finally {
-      if (refresh) setRefreshingUsa(false);
-    }
-  };
-
-  // Fetch Bollywood top songs from YouTube Charts
-  const fetchBollywoodTopSongs = async (refresh = false) => {
-    if (refresh) setRefreshingBollywood(true);
-    try {
-      const url = refresh ? `/api/youtube-bollywood?refresh=true&t=${Date.now()}` : "/api/youtube-bollywood";
-      const res = await fetch(url, { cache: 'no-store' });
-      const data = await res.json();
-      if (res.ok && data.tracks) {
-        setBollywoodTopSongs(data.tracks);
-        if (!data.cached || refresh) {
-          setBollywoodLastUpdated(new Date().toLocaleString());
-        }
-      } else {
-        console.error("Failed to fetch Bollywood top songs:", data.error);
-      }
-    } catch (err) {
-      console.error("Network error while fetching Bollywood top songs:", err);
-    } finally {
-      if (refresh) setRefreshingBollywood(false);
+      setRefreshingCat(null);
     }
   };
 
   useEffect(() => {
-    // Fetch top tracks from API
-    const fetchTopTracks = async () => {
-      try {
-        const res = await fetch("/api/search");
-        const data: SearchResponse = await res.json();
-        if (res.ok && data.tracks) {
-          setTrending(data.tracks);
-          if (!data.cached) {
-            setLastUpdated(new Date().toLocaleString());
-          }
-        } else {
-          console.error("Failed to fetch top tracks:", data.error);
-        }
-      } catch (err) {
-        console.error("Network error while fetching top tracks:", err);
-      }
-    };
+    // Initial fetch for dynamic categories
+    PLAYLIST_CATEGORIES.forEach(cat => {
+      if (!cat.isStatic) fetchCategory(cat.id);
+    });
+  }, []);
 
-fetchTopTracks();
-      fetchIndiaTopSongs(); fetchGlobalTopSongs(); fetchUsaTopSongs(); fetchBollywoodTopSongs();
-    }, []);
-
-    // Load RKS chart data when selected
-    useEffect(() => {
-      if (chartMode === 'rks') {
-        setRksTopSongs(rksChart);
-      }
-    }, [chartMode]);
+  useEffect(() => {
+    if (chartMode === 'rks') fetchCategory('rks');
+  }, [chartMode]);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -307,25 +235,6 @@ fetchTopTracks();
     setImageErrors(prev => new Set([...prev, trackKey]));
   };
 
-  // ── Refresh Billboard data ───────────────────────────────────────────────────
-  const handleRefresh = async () => {
-    setRefreshing(true);
-    try {
-      const res = await fetch(`/api/search?refresh=true&t=${Date.now()}`, { cache: 'no-store' });
-      const data: SearchResponse = await res.json();
-      if (res.ok && data.tracks) {
-        setTrending(data.tracks);
-        setLastUpdated(new Date().toLocaleString());
-      } else {
-        console.error("Failed to refresh Billboard data:", data.error);
-      }
-    } catch (err) {
-      console.error("Network error while refreshing Billboard data:", err);
-    } finally {
-      setRefreshing(false);
-    }
-  };
-
   return (
     <div className="app-container">
       {/* ── Mobile Menu Button ── */}
@@ -381,43 +290,16 @@ fetchTopTracks();
             {searching && <span className="search-bar__spinner"></span>}
           </form>
           {/* Chart mode toggle */}
-          <div className="chart-mode-toggle">
-            <button
-              className={`toggle-button ${chartMode === 'global' ? 'active' : ''}`}
-              onClick={() => setChartMode('global')}
-            >
-              Global
-            </button>
-            <button
-              className={`toggle-button ${chartMode === 'india' ? 'active' : ''}`}
-              onClick={() => setChartMode('india')}
-            >
-              India
-            </button>
-            <button
-              className={`toggle-button ${chartMode === 'usa' ? 'active' : ''}`}
-              onClick={() => setChartMode('usa')}
-            >
-              USA
-            </button>
-            <button
-              className={`toggle-button ${chartMode === 'bollywood' ? 'active' : ''}`}
-              onClick={() => setChartMode('bollywood')}
-            >
-              Bollywood
-            </button>
-<button
-          className={`toggle-button ${chartMode === 'billboard' ? 'active' : ''}`}
-          onClick={() => setChartMode('billboard')}
-        >
-          Billboard
-        </button>
-        <button
-          className={`toggle-button ${chartMode === 'rks' ? 'active' : ''}`}
-          onClick={() => setChartMode('rks')}
-        >
-          RKS
-        </button>
+                    <div className="chart-mode-toggle">
+            {PLAYLIST_CATEGORIES.map(cat => (
+              <button
+                key={cat.id}
+                className={`toggle-button ${chartMode === cat.id ? 'active' : ''}`}
+                onClick={() => setChartMode(cat.id)}
+              >
+                {cat.label}
+              </button>
+            ))}
           </div>
         </header>
 
@@ -430,329 +312,81 @@ fetchTopTracks();
 
 {!searching && results.length === 0 && !searchError && (
             <>
-              {chartMode === 'india' && (
-                <section className="results-section">
-                  <div className="section-header">
-                    <h2 className="section-title">Top Songs in India</h2>
-                    <button 
-                      className="refresh-button"
-                      onClick={() => fetchIndiaTopSongs(true)}
-                      disabled={refreshingIndia}
-                      title="Refresh India Top Songs"
-                    >
-                      {refreshingIndia ? '⟳' : '↻'}
-                    </button>
-                  </div>
-                  {indiaLastUpdated && (
-                    <p className="last-updated">Last updated: {indiaLastUpdated}</p>
-                  )}
-                  <div className="track-grid">
-                    {indiaTopSongs.map((track, index) => {
-                      const isActive = activeTrack?.videoId === track.videoId;
-                      const uniqueKey = track.videoId || `${track.title}-${track.channel}-${index}`;
-                      const isLoading = loadingTrack === `${track.billboardTitle || ''}${track.billboardArtist || ''}`;
-                      const hasImageError = imageErrors.has(uniqueKey);
-                      const showImage = track.thumbnail && !hasImageError && !isLoading;
-                      
-                      return (
-                        <div
-                          key={uniqueKey}
-                          className={`track-card ${isActive ? 'track-card--active' : ''} ${isLoading ? 'track-card--loading' : ''}`}
-                          onClick={() => !isLoading && handlePlay(track)}
+
+              {PLAYLIST_CATEGORIES.map(cat => {
+                if (chartMode !== cat.id) return null;
+                const pData = playlistsData[cat.id];
+                const tracks = pData?.tracks || [];
+                const isRefreshing = refreshingCat === cat.id;
+                
+                return (
+                  <section key={cat.id} className="results-section">
+                    <div className="section-header">
+                      <h2 className="section-title">{cat.label} Chart</h2>
+                      {!cat.isStatic && (
+                        <button
+                          className="refresh-button"
+                          onClick={() => fetchCategory(cat.id, true)}
+                          disabled={isRefreshing}
+                          title={`Refresh ${cat.label} top songs`}
                         >
-                          <div className="track-card__image-container">
-{isLoading ? (
-  <div className="track-card__loading-overlay">
-    <span className="track-card__spinner"></span>
-  </div>
-) : showImage && track.thumbnail ? (
-  // eslint-disable-next-line @next/next/no-img-element
-  <img
-    src={track.thumbnail}
-    alt={track.title}
-    className="track-card__image"
-    loading="lazy"
-    onError={() => handleImageError(uniqueKey)}
-  />
-) : (
-                              <div className="track-card__image-placeholder">
-                                <div className="track-card__placeholder-icon">🎵</div>
-                              </div>
-                            )}
-                            {!isLoading && (
-                              <button
-                                className="track-card__play-btn"
-                                aria-label={`Play ${track.title}`}
-                                onClick={(e) => { e.stopPropagation(); handlePlay(track); }}
-                              >
-                                {isActive ? "⏸" : "▶"}
-                              </button>
-                            )}
+                          {isRefreshing ? '⟳' : '↻'}
+                        </button>
+                      )}
+                    </div>
+                    {pData?.lastUpdated && (
+                      <p className="last-updated">Last updated: {pData.lastUpdated}</p>
+                    )}
+                    <div className="track-grid">
+                      {tracks.map((track, index) => {
+                        const isActive = activeTrack?.videoId === track.videoId;
+                        const uniqueKey = track.videoId || `${track.title}-${track.channel}-${index}`;
+                        const isLoading = loadingTrack === `${track.billboardTitle || ''}${track.billboardArtist || ''}`;
+                        const hasImageError = imageErrors.has(uniqueKey);
+                        const showImage = track.thumbnail && !hasImageError && !isLoading;
+                        
+                        return (
+                          <div
+                            key={uniqueKey}
+                            className={`track-card ${isActive ? 'track-card--active' : ''} ${isLoading ? 'track-card--loading' : ''}`}
+                            onClick={() => !isLoading && handlePlay(track)}
+                          >
+                            <div className="track-card__image-container">
+                              {isLoading ? (
+                                <div className="track-card__loading-overlay"><span className="track-card__spinner"></span></div>
+                              ) : showImage && track.thumbnail ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  src={track.thumbnail}
+                                  alt={track.title}
+                                  className="track-card__image"
+                                  loading="lazy"
+                                  onError={() => handleImageError(uniqueKey)}
+                                />
+                              ) : (
+                                <div className="track-card__image-placeholder"><div className="track-card__placeholder-icon">🎵</div></div>
+                              )}
+                              {!isLoading && (
+                                <button
+                                  className="track-card__play-btn"
+                                  aria-label={`Play ${track.title}`}
+                                  onClick={(e) => { e.stopPropagation(); handlePlay(track); }}
+                                >
+                                  {isActive ? "⏸" : "▶"}
+                                </button>
+                              )}
+                            </div>
+                            <h3 className="track-card__title" title={track.title}>{track.title}</h3>
+                            <p className="track-card__channel">{track.channel}</p>
                           </div>
-                          <h3 className="track-card__title" title={track.title}>{track.title}</h3>
-                          
-                        </div>
-                      );
-                    })}
-                  </div>
-                </section>
-              )}
-              {chartMode === 'billboard' && (
-                <section className="results-section">
-                  <div className="section-header">
-                    <h2 className="section-title">Top 50 Billboard Hits</h2>
-                    <button 
-                      className="refresh-button"
-                      onClick={handleRefresh}
-                      disabled={refreshing}
-                      title="Refresh Billboard data"
-                    >
-                      {refreshing ? '⟳' : '↻'}
-                    </button>
-                  </div>
-                  {lastUpdated && (
-                    <p className="last-updated">Last updated: {lastUpdated}</p>
-                  )}
-                  <div className="track-grid">
-                    {trending.map((track, index) => {
-                      const isActive = activeTrack?.videoId === track.videoId;
-                      const uniqueKey = track.videoId || `${track.title}-${track.channel}-${index}`;
-                      const isLoading = loadingTrack === `${track.billboardTitle || ''}${track.billboardArtist || ''}`;
-                      const hasImageError = imageErrors.has(uniqueKey);
-                      const showImage = track.thumbnail && !hasImageError && !isLoading;
-                      
-                      return (
-                        <div
-                          key={uniqueKey}
-                          className={`track-card ${isActive ? 'track-card--active' : ''} ${isLoading ? 'track-card--loading' : ''}`}
-                          onClick={() => !isLoading && handlePlay(track)}
-                        >
-                          <div className="track-card__image-container">
-{isLoading ? (
-  <div className="track-card__loading-overlay">
-    <span className="track-card__spinner"></span>
-  </div>
-) : showImage && track.thumbnail ? (
-  // eslint-disable-next-line @next/next/no-img-element
-  <img
-    src={track.thumbnail}
-    alt={track.title}
-    className="track-card__image"
-    loading="lazy"
-    onError={() => handleImageError(uniqueKey)}
-  />
-) : (
-                              <div className="track-card__image-placeholder">
-                                <div className="track-card__placeholder-icon">🎵</div>
-                              </div>
-                            )}
-                            {!isLoading && (
-                              <button
-                                className="track-card__play-btn"
-                                aria-label={`Play ${track.title}`}
-                                onClick={(e) => { e.stopPropagation(); handlePlay(track); }}
-                              >
-                                {isActive ? "⏸" : "▶"}
-                              </button>
-                            )}
-                          </div>
-                          <h3 className="track-card__title" title={track.title}>{track.title}</h3>
-                          
-                        </div>
-                      );
-                    })}
-                  </div>
-                </section>
-              )}
-            {chartMode === 'global' && (
-                <section className="results-section">
-                  <div className="section-header">
-                    <h2 className="section-title">Top Songs Global</h2>
-                    <button
-                      className="refresh-button"
-                      onClick={() => fetchGlobalTopSongs(true)}
-                      disabled={refreshingGlobal}
-                      title="Refresh Global top songs"
-                    >
-                      {refreshingGlobal ? '⟳' : '↻'}
-                    </button>
-                  </div>
-                  {globalLastUpdated && (
-                    <p className="last-updated">Last updated: {globalLastUpdated}</p>
-                  )}
-                  <div className="track-grid">
-                    {globalTopSongs.map((track, index) => {
-                      const isActive = activeTrack?.videoId === track.videoId;
-                      const uniqueKey = track.videoId || `${track.title}-${track.channel}-${index}`;
-                      const isLoading = loadingTrack === `${track.billboardTitle || ''}${track.billboardArtist || ''}`;
-                      const hasImageError = imageErrors.has(uniqueKey);
-                      const showImage = track.thumbnail && !hasImageError && !isLoading;
-                      return (
-                        <div
-                          key={uniqueKey}
-                          className={`track-card ${isActive ? 'track-card--active' : ''} ${isLoading ? 'track-card--loading' : ''}`}
-                          onClick={() => !isLoading && handlePlay(track)}
-                        >
-                          <div className="track-card__image-container">
-                            {isLoading ? (
-                              <div className="track-card__loading-overlay"><span className="track-card__spinner"></span></div>
-                            ) : showImage && track.thumbnail ? (
-                              // eslint-disable-next-line @next/next/no-img-element
-                              <img
-                                src={track.thumbnail}
-                                alt={track.title}
-                                className="track-card__image"
-                                loading="lazy"
-                                onError={() => handleImageError(uniqueKey)}
-                              />
-                            ) : (
-                              <div className="track-card__image-placeholder"><div className="track-card__placeholder-icon">🎵</div></div>
-                            )}
-                            {!isLoading && (
-                              <button
-                                className="track-card__play-btn"
-                                aria-label={`Play ${track.title}`}
-                                onClick={(e) => { e.stopPropagation(); handlePlay(track); }}
-                              >
-                                {isActive ? "⏸" : "▶"}
-                              </button>
-                            )}
-                          </div>
-                          <h3 className="track-card__title" title={track.title}>{track.title}</h3>
-                          
-                        </div>
-                      );
-                    })}
-                  </div>
-                </section>
-              )}
-            {chartMode === 'usa' && (
-                <section className="results-section">
-                  <div className="section-header">
-                    <h2 className="section-title">Top Songs in USA</h2>
-                    <button
-                      className="refresh-button"
-                      onClick={() => fetchUsaTopSongs(true)}
-                      disabled={refreshingUsa}
-                      title="Refresh USA top songs"
-                    >
-                      {refreshingUsa ? '⟳' : '↻'}
-                    </button>
-                  </div>
-                  {usaLastUpdated && (
-                    <p className="last-updated">Last updated: {usaLastUpdated}</p>
-                  )}
-                  <div className="track-grid">
-                    {usaTopSongs.map((track, index) => {
-                      const isActive = activeTrack?.videoId === track.videoId;
-                      const uniqueKey = track.videoId || `${track.title}-${track.channel}-${index}`;
-                      const isLoading = loadingTrack === `${track.billboardTitle || ''}${track.billboardArtist || ''}`;
-                      const hasImageError = imageErrors.has(uniqueKey);
-                      const showImage = track.thumbnail && !hasImageError && !isLoading;
-                      return (
-                        <div
-                          key={uniqueKey}
-                          className={`track-card ${isActive ? 'track-card--active' : ''} ${isLoading ? 'track-card--loading' : ''}`}
-                          onClick={() => !isLoading && handlePlay(track)}
-                        >
-                          <div className="track-card__image-container">
-                            {isLoading ? (
-                              <div className="track-card__loading-overlay"><span className="track-card__spinner"></span></div>
-                            ) : showImage && track.thumbnail ? (
-                              // eslint-disable-next-line @next/next/no-img-element
-                              <img
-                                src={track.thumbnail}
-                                alt={track.title}
-                                className="track-card__image"
-                                loading="lazy"
-                                onError={() => handleImageError(uniqueKey)}
-                              />
-                            ) : (
-                              <div className="track-card__image-placeholder"><div className="track-card__placeholder-icon">🎵</div></div>
-                            )}
-                            {!isLoading && (
-                              <button
-                                className="track-card__play-btn"
-                                aria-label={`Play ${track.title}`}
-                                onClick={(e) => { e.stopPropagation(); handlePlay(track); }}
-                              >
-                                {isActive ? "⏸" : "▶"}
-                              </button>
-                            )}
-                          </div>
-                          <h3 className="track-card__title" title={track.title}>{track.title}</h3>
-                          
-                        </div>
-                      );
-                    })}
-                  </div>
-                </section>
-              )}
-            {chartMode === 'bollywood' && (
-                <section className="results-section">
-                  <div className="section-header">
-                    <h2 className="section-title">Bollywood Hits</h2>
-                    <button
-                      className="refresh-button"
-                      onClick={() => fetchBollywoodTopSongs(true)}
-                      disabled={refreshingBollywood}
-                      title="Refresh Bollywood top songs"
-                    >
-                      {refreshingBollywood ? '⟳' : '↻'}
-                    </button>
-                  </div>
-                  {bollywoodLastUpdated && (
-                    <p className="last-updated">Last updated: {bollywoodLastUpdated}</p>
-                  )}
-                  <div className="track-grid">
-                    {bollywoodTopSongs.map((track, index) => {
-                      const isActive = activeTrack?.videoId === track.videoId;
-                      const uniqueKey = track.videoId || `${track.title}-${track.channel}-${index}`;
-                      const isLoading = loadingTrack === `${track.billboardTitle || ''}${track.billboardArtist || ''}`;
-                      const hasImageError = imageErrors.has(uniqueKey);
-                      const showImage = track.thumbnail && !hasImageError && !isLoading;
-                      return (
-                        <div
-                          key={uniqueKey}
-                          className={`track-card ${isActive ? 'track-card--active' : ''} ${isLoading ? 'track-card--loading' : ''}`}
-                          onClick={() => !isLoading && handlePlay(track)}
-                        >
-                          <div className="track-card__image-container">
-                            {isLoading ? (
-                              <div className="track-card__loading-overlay"><span className="track-card__spinner"></span></div>
-                            ) : showImage && track.thumbnail ? (
-                              // eslint-disable-next-line @next/next/no-img-element
-                              <img
-                                src={track.thumbnail}
-                                alt={track.title}
-                                className="track-card__image"
-                                loading="lazy"
-                                onError={() => handleImageError(uniqueKey)}
-                              />
-                            ) : (
-                              <div className="track-card__image-placeholder"><div className="track-card__placeholder-icon">🎵</div></div>
-                            )}
-                            {!isLoading && (
-                              <button
-                                className="track-card__play-btn"
-                                aria-label={`Play ${track.title}`}
-                                onClick={(e) => { e.stopPropagation(); handlePlay(track); }}
-                              >
-                                {isActive ? "⏸" : "▶"}
-                              </button>
-                            )}
-                          </div>
-                          <h3 className="track-card__title" title={track.title}>{track.title}</h3>
-                          
-                        </div>
-                      );
-                    })}
-                  </div>
-                </section>
-              )}
+                        );
+                      })}
+                    </div>
+                  </section>
+                );
+              })}
             </>
           )}
-
 
            {results.length > 0 && (
              <section className="results-section">
@@ -774,16 +408,16 @@ fetchTopTracks();
                         onClick={() => handlePlay(track)}
                       >
                        <div className="track-card__image-container">
-{showImage && track.thumbnail ? (
-  // eslint-disable-next-line @next/next/no-img-element
-  <img
-    src={track.thumbnail}
-    alt={track.title}
-    className="track-card__image"
-    loading="lazy"
-    onError={() => handleImageError(uniqueKey)}
-  />
-) : (
+                          {showImage && track.thumbnail ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={track.thumbnail}
+                              alt={track.title}
+                              className="track-card__image"
+                              loading="lazy"
+                              onError={() => handleImageError(uniqueKey)}
+                            />
+                          ) : (
                            <div className="track-card__image-placeholder">
                              <div className="track-card__placeholder-icon">🎵</div>
                            </div>
@@ -795,46 +429,17 @@ fetchTopTracks();
                          >
                            {isActive ? "⏸" : "▶"}
                          </button>
-</div>
-<h3 className="track-card__title" title={track.title}>{track.title}</h3>
-<p className="track-card__channel">{track.channel}</p>
-</div>
+                        </div>
+                        <h3 className="track-card__title" title={track.title}>{track.title}</h3>
+                        <p className="track-card__channel">{track.channel}</p>
+                      </div>
                    );
                  })}
               </div>
-                </section>
-               )}
-              {chartMode === 'rks' && rksTopSongs.length > 0 && (
-                <section className="results-section">
-                  <div className="section-header">
-                    <h2 className="section-title">RKS Chart</h2>
-                  </div>
-                  <div className="track-grid">
-                    {rksTopSongs.map((track, index) => {
-                      const isActive = activeTrack?.videoId === track.videoId;
-                      const uniqueKey = track.title + index;
-                      return (
-                        <div
-                          key={uniqueKey}
-                          className={`track-card ${isActive ? 'track-card--active' : ''}`}
-                          onClick={() => handlePlay(track)}
-                        >
-                          <div className="track-card__image-container">
-                            <div className="track-card__image-placeholder"><div className="track-card__placeholder-icon">🎵</div></div>
-                            <button className="track-card__play-btn" aria-label={`Play ${track.title}`} onClick={(e) => { e.stopPropagation(); handlePlay(track); }}>
-                              {isActive ? "⏸" : "▶"}
-                            </button>
-                          </div>
-                          <h3 className="track-card__title" title={track.title}>{track.title}</h3>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </section>
-              )}
+            </section>
+           )}
         </div>
       </main>
-
 
       {/* ── Mobile Bottom Navigation ── */}
       <nav className="mobile-bottom-nav">
