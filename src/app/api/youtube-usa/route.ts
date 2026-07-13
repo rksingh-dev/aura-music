@@ -3,6 +3,8 @@ import { parseYoutubeUsaTopSongs } from "@/utils/youtube_usa_charts_scraper";
 import { writeFileSync, readFileSync, existsSync } from "fs";
 import { join } from "path";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export const runtime = "nodejs";
 
 let youtubeUsaCache: any[] = [];

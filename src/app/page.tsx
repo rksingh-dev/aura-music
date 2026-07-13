@@ -92,7 +92,7 @@ export default function Home() {
   const [refreshing, setRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [chartMode, setChartMode] = useState<'billboard' | 'india' | 'global' | 'usa' | 'rks'>('global');
+  const [chartMode, setChartMode] = useState<'billboard' | 'india' | 'global' | 'usa' | 'rks' | 'bollywood'>('global');
   const [refreshingIndia, setRefreshingIndia] = useState(false);
   const [indiaLastUpdated, setIndiaLastUpdated] = useState<string | null>(null);
   const [refreshingGlobal, setRefreshingGlobal] = useState(false);
@@ -101,13 +101,16 @@ export default function Home() {
   const [usaLastUpdated, setUsaLastUpdated] = useState<string | null>(null);
   const [usaTopSongs, setUsaTopSongs] = useState<Track[]>([]);
   const [rksTopSongs, setRksTopSongs] = useState<Track[]>([]);
+  const [refreshingBollywood, setRefreshingBollywood] = useState(false);
+  const [bollywoodLastUpdated, setBollywoodLastUpdated] = useState<string | null>(null);
+  const [bollywoodTopSongs, setBollywoodTopSongs] = useState<Track[]>([]);
 
   // Fetch India top songs from YouTube Charts
   const fetchIndiaTopSongs = async (refresh = false) => {
     if (refresh) setRefreshingIndia(true);
     try {
-      const url = refresh ? "/api/youtube-india?refresh=true" : "/api/youtube-india";
-      const res = await fetch(url);
+      const url = refresh ? `/api/youtube-india?refresh=true&t=${Date.now()}` : "/api/youtube-india";
+      const res = await fetch(url, { cache: 'no-store' });
       const data = await res.json();
       if (res.ok && data.tracks) {
         setIndiaTopSongs(data.tracks);
@@ -128,8 +131,8 @@ export default function Home() {
   const fetchGlobalTopSongs = async (refresh = false) => {
     if (refresh) setRefreshingGlobal(true);
     try {
-      const url = refresh ? "/api/youtube-global?refresh=true" : "/api/youtube-global";
-      const res = await fetch(url);
+      const url = refresh ? `/api/youtube-global?refresh=true&t=${Date.now()}` : "/api/youtube-global";
+      const res = await fetch(url, { cache: 'no-store' });
       const data = await res.json();
       if (res.ok && data.tracks) {
         setGlobalTopSongs(data.tracks);
@@ -151,8 +154,8 @@ export default function Home() {
   const fetchUsaTopSongs = async (refresh = false) => {
     if (refresh) setRefreshingUsa(true);
     try {
-      const url = refresh ? "/api/youtube-usa?refresh=true" : "/api/youtube-usa";
-      const res = await fetch(url);
+      const url = refresh ? `/api/youtube-usa?refresh=true&t=${Date.now()}` : "/api/youtube-usa";
+      const res = await fetch(url, { cache: 'no-store' });
       const data = await res.json();
       if (res.ok && data.tracks) {
         setUsaTopSongs(data.tracks);
@@ -168,6 +171,29 @@ export default function Home() {
       if (refresh) setRefreshingUsa(false);
     }
   };
+
+  // Fetch Bollywood top songs from YouTube Charts
+  const fetchBollywoodTopSongs = async (refresh = false) => {
+    if (refresh) setRefreshingBollywood(true);
+    try {
+      const url = refresh ? `/api/youtube-bollywood?refresh=true&t=${Date.now()}` : "/api/youtube-bollywood";
+      const res = await fetch(url, { cache: 'no-store' });
+      const data = await res.json();
+      if (res.ok && data.tracks) {
+        setBollywoodTopSongs(data.tracks);
+        if (!data.cached || refresh) {
+          setBollywoodLastUpdated(new Date().toLocaleString());
+        }
+      } else {
+        console.error("Failed to fetch Bollywood top songs:", data.error);
+      }
+    } catch (err) {
+      console.error("Network error while fetching Bollywood top songs:", err);
+    } finally {
+      if (refresh) setRefreshingBollywood(false);
+    }
+  };
+
   useEffect(() => {
     // Fetch top tracks from API
     const fetchTopTracks = async () => {
@@ -188,7 +214,7 @@ export default function Home() {
     };
 
 fetchTopTracks();
-      fetchIndiaTopSongs(); fetchGlobalTopSongs(); fetchUsaTopSongs();
+      fetchIndiaTopSongs(); fetchGlobalTopSongs(); fetchUsaTopSongs(); fetchBollywoodTopSongs();
     }, []);
 
     // Load RKS chart data when selected
@@ -285,7 +311,7 @@ fetchTopTracks();
   const handleRefresh = async () => {
     setRefreshing(true);
     try {
-      const res = await fetch("/api/search?refresh=true");
+      const res = await fetch(`/api/search?refresh=true&t=${Date.now()}`, { cache: 'no-store' });
       const data: SearchResponse = await res.json();
       if (res.ok && data.tracks) {
         setTrending(data.tracks);
@@ -374,6 +400,12 @@ fetchTopTracks();
             >
               USA
             </button>
+            <button
+              className={`toggle-button ${chartMode === 'bollywood' ? 'active' : ''}`}
+              onClick={() => setChartMode('bollywood')}
+            >
+              Bollywood
+            </button>
 <button
           className={`toggle-button ${chartMode === 'billboard' ? 'active' : ''}`}
           onClick={() => setChartMode('billboard')}
@@ -398,7 +430,7 @@ fetchTopTracks();
 
 {!searching && results.length === 0 && !searchError && (
             <>
-              {chartMode === 'india' && indiaTopSongs.length > 0 && (
+              {chartMode === 'india' && (
                 <section className="results-section">
                   <div className="section-header">
                     <h2 className="section-title">Top Songs in India</h2>
@@ -465,7 +497,7 @@ fetchTopTracks();
                   </div>
                 </section>
               )}
-              {chartMode === 'billboard' && trending.length > 0 && (
+              {chartMode === 'billboard' && (
                 <section className="results-section">
                   <div className="section-header">
                     <h2 className="section-title">Top 50 Billboard Hits</h2>
@@ -532,7 +564,7 @@ fetchTopTracks();
                   </div>
                 </section>
               )}
-            {chartMode === 'global' && globalTopSongs.length > 0 && (
+            {chartMode === 'global' && (
                 <section className="results-section">
                   <div className="section-header">
                     <h2 className="section-title">Top Songs Global</h2>
@@ -594,7 +626,7 @@ fetchTopTracks();
                   </div>
                 </section>
               )}
-            {chartMode === 'usa' && usaTopSongs.length > 0 && (
+            {chartMode === 'usa' && (
                 <section className="results-section">
                   <div className="section-header">
                     <h2 className="section-title">Top Songs in USA</h2>
@@ -612,6 +644,68 @@ fetchTopTracks();
                   )}
                   <div className="track-grid">
                     {usaTopSongs.map((track, index) => {
+                      const isActive = activeTrack?.videoId === track.videoId;
+                      const uniqueKey = track.videoId || `${track.title}-${track.channel}-${index}`;
+                      const isLoading = loadingTrack === `${track.billboardTitle || ''}${track.billboardArtist || ''}`;
+                      const hasImageError = imageErrors.has(uniqueKey);
+                      const showImage = track.thumbnail && !hasImageError && !isLoading;
+                      return (
+                        <div
+                          key={uniqueKey}
+                          className={`track-card ${isActive ? 'track-card--active' : ''} ${isLoading ? 'track-card--loading' : ''}`}
+                          onClick={() => !isLoading && handlePlay(track)}
+                        >
+                          <div className="track-card__image-container">
+                            {isLoading ? (
+                              <div className="track-card__loading-overlay"><span className="track-card__spinner"></span></div>
+                            ) : showImage && track.thumbnail ? (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img
+                                src={track.thumbnail}
+                                alt={track.title}
+                                className="track-card__image"
+                                loading="lazy"
+                                onError={() => handleImageError(uniqueKey)}
+                              />
+                            ) : (
+                              <div className="track-card__image-placeholder"><div className="track-card__placeholder-icon">🎵</div></div>
+                            )}
+                            {!isLoading && (
+                              <button
+                                className="track-card__play-btn"
+                                aria-label={`Play ${track.title}`}
+                                onClick={(e) => { e.stopPropagation(); handlePlay(track); }}
+                              >
+                                {isActive ? "⏸" : "▶"}
+                              </button>
+                            )}
+                          </div>
+                          <h3 className="track-card__title" title={track.title}>{track.title}</h3>
+                          
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
+            {chartMode === 'bollywood' && (
+                <section className="results-section">
+                  <div className="section-header">
+                    <h2 className="section-title">Bollywood Hits</h2>
+                    <button
+                      className="refresh-button"
+                      onClick={() => fetchBollywoodTopSongs(true)}
+                      disabled={refreshingBollywood}
+                      title="Refresh Bollywood top songs"
+                    >
+                      {refreshingBollywood ? '⟳' : '↻'}
+                    </button>
+                  </div>
+                  {bollywoodLastUpdated && (
+                    <p className="last-updated">Last updated: {bollywoodLastUpdated}</p>
+                  )}
+                  <div className="track-grid">
+                    {bollywoodTopSongs.map((track, index) => {
                       const isActive = activeTrack?.videoId === track.videoId;
                       const uniqueKey = track.videoId || `${track.title}-${track.channel}-${index}`;
                       const isLoading = loadingTrack === `${track.billboardTitle || ''}${track.billboardArtist || ''}`;

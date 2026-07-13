@@ -12,23 +12,13 @@
     },
     {
       "videoId": "",
-      "title": "Man I Need - Olivia Dean",
-      "channel": "Olivia Dean",
+      "title": "I Knew It, I Knew You - Taylor Swift",
+      "channel": "Taylor Swift",
       "duration": "—",
-      "thumbnail": "https://charts-static.billboard.com/img/2025/08/oliviadean-8k4-manineed-jej-180x180.jpg",
+      "thumbnail": "https://charts-static.billboard.com/img/2026/06/taylor-swift-vug-iknewitiknewyou-ph3-180x180.jpg",
       "billboardRank": "2",
-      "billboardTitle": "Man I Need",
-      "billboardArtist": "Olivia Dean"
-    },
-    {
-      "videoId": "",
-      "title": "I Just Might - Bruno Mars",
-      "channel": "Bruno Mars",
-      "duration": "—",
-      "thumbnail": "https://charts-static.billboard.com/img/2010/01/bruno-mars-8dl-180x180.jpg",
-      "billboardRank": "3",
-      "billboardTitle": "I Just Might",
-      "billboardArtist": "Bruno Mars"
+      "billboardTitle": "I Knew It, I Knew You",
+      "billboardArtist": "Taylor Swift"
     },
     {
       "videoId": "",
@@ -36,109 +26,49 @@
       "channel": "Ella Langley",
       "duration": "—",
       "thumbnail": "https://charts-static.billboard.com/img/2023/06/ellalangley-yci-180x180.jpg",
-      "billboardRank": "4",
+      "billboardRank": "3",
       "billboardTitle": "Be Her",
       "billboardArtist": "Ella Langley"
     },
     {
       "videoId": "",
-      "title": "Ordinary - Alex Warren",
-      "channel": "Alex Warren",
+      "title": "Janice STFU - Drake",
+      "channel": "Drake",
       "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "5",
-      "billboardTitle": "Ordinary",
-      "billboardArtist": "Alex Warren"
+      "thumbnail": "https://charts-static.billboard.com/img/2009/04/drake-v3o-180x180.jpg",
+      "billboardRank": "4",
+      "billboardTitle": "Janice STFU",
+      "billboardArtist": "Drake"
     },
     {
       "videoId": "",
-      "title": "So Easy (To Fall In Love) - Olivia Dean",
+      "title": "Man I Need - Olivia Dean",
       "channel": "Olivia Dean",
       "duration": "—",
       "thumbnail": "",
-      "billboardRank": "6",
-      "billboardTitle": "So Easy (To Fall In Love)",
+      "billboardRank": "5",
+      "billboardTitle": "Man I Need",
       "billboardArtist": "Olivia Dean"
     },
     {
       "videoId": "",
-      "title": "Golden - HUNTR/X: EJAE, Audrey Nuna & REI AMI",
-      "channel": "HUNTR/X: EJAE, Audrey Nuna & REI AMI",
+      "title": "I Can't Love You Anymore - Ella Langley & Morgan Wallen",
+      "channel": "Ella Langley & Morgan Wallen",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "6",
+      "billboardTitle": "I Can't Love You Anymore",
+      "billboardArtist": "Ella Langley & Morgan Wallen"
+    },
+    {
+      "videoId": "",
+      "title": "Hate That I Made You Love Me - Ariana Grande",
+      "channel": "Ariana Grande",
       "duration": "—",
       "thumbnail": "",
       "billboardRank": "7",
-      "billboardTitle": "Golden",
-      "billboardArtist": "HUNTR/X: EJAE, Audrey Nuna & REI AMI"
-    },
-    {
-      "videoId": "",
-      "title": "Stateside - PinkPantheress With Zara Larsson",
-      "channel": "PinkPantheress With Zara Larsson",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "8",
-      "billboardTitle": "Stateside",
-      "billboardArtist": "PinkPantheress With Zara Larsson"
-    },
-    {
-      "videoId": "",
-      "title": "Folded - Kehlani",
-      "channel": "Kehlani",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "9",
-      "billboardTitle": "Folded",
-      "billboardArtist": "Kehlani"
-    },
-    {
-      "videoId": "",
-      "title": "Swim - BTS",
-      "channel": "BTS",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "10",
-      "billboardTitle": "Swim",
-      "billboardArtist": "BTS"
-    },
-    {
-      "videoId": "",
-      "title": "The Fate Of Ophelia - Taylor Swift",
-      "channel": "Taylor Swift",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "11",
-      "billboardTitle": "The Fate Of Ophelia",
-      "billboardArtist": "Taylor Swift"
-    },
-    {
-      "videoId": "",
-      "title": "Risk It All - Bruno Mars",
-      "channel": "Bruno Mars",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "12",
-      "billboardTitle": "Risk It All",
-      "billboardArtist": "Bruno Mars"
-    },
-    {
-      "videoId": "",
-      "title": "Yukon - Justin Bieber",
-      "channel": "Justin Bieber",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "13",
-      "billboardTitle": "Yukon",
-      "billboardArtist": "Justin Bieber"
-    },
-    {
-      "videoId": "",
-      "title": "Where Is My Husband! - RAYE",
-      "channel": "RAYE",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "14",
-      "billboardTitle": "Where Is My Husband!",
-      "billboardArtist": "RAYE"
+      "billboardTitle": "Hate That I Made You Love Me",
+      "billboardArtist": "Ariana Grande"
     },
     {
       "videoId": "",
@@ -146,99 +76,69 @@
       "channel": "Tame Impala & JENNIE",
       "duration": "—",
       "thumbnail": "",
-      "billboardRank": "15",
+      "billboardRank": "8",
       "billboardTitle": "Dracula",
       "billboardArtist": "Tame Impala & JENNIE"
     },
     {
       "videoId": "",
-      "title": "Sleepless In A Hotel Room - Luke Combs",
-      "channel": "Luke Combs",
+      "title": "Drop Dead - Olivia Rodrigo",
+      "channel": "Olivia Rodrigo",
       "duration": "—",
       "thumbnail": "",
-      "billboardRank": "16",
-      "billboardTitle": "Sleepless In A Hotel Room",
-      "billboardArtist": "Luke Combs"
+      "billboardRank": "9",
+      "billboardTitle": "Drop Dead",
+      "billboardArtist": "Olivia Rodrigo"
     },
     {
       "videoId": "",
-      "title": "Opalite - Taylor Swift",
-      "channel": "Taylor Swift",
+      "title": "I Just Might - Bruno Mars",
+      "channel": "Bruno Mars",
       "duration": "—",
       "thumbnail": "",
-      "billboardRank": "17",
-      "billboardTitle": "Opalite",
-      "billboardArtist": "Taylor Swift"
+      "billboardRank": "10",
+      "billboardTitle": "I Just Might",
+      "billboardArtist": "Bruno Mars"
     },
     {
       "videoId": "",
-      "title": "Daisies - Justin Bieber",
-      "channel": "Justin Bieber",
+      "title": "Stupid Song - Olivia Rodrigo",
+      "channel": "Olivia Rodrigo",
       "duration": "—",
       "thumbnail": "",
-      "billboardRank": "18",
-      "billboardTitle": "Daisies",
-      "billboardArtist": "Justin Bieber"
+      "billboardRank": "11",
+      "billboardTitle": "Stupid Song",
+      "billboardArtist": "Olivia Rodrigo"
     },
     {
       "videoId": "",
-      "title": "Babydoll - Dominic Fike",
-      "channel": "Dominic Fike",
+      "title": "So Easy (To Fall In Love) - Olivia Dean",
+      "channel": "Olivia Dean",
       "duration": "—",
       "thumbnail": "",
-      "billboardRank": "19",
-      "billboardTitle": "Babydoll",
-      "billboardArtist": "Dominic Fike"
+      "billboardRank": "12",
+      "billboardTitle": "So Easy (To Fall In Love)",
+      "billboardArtist": "Olivia Dean"
     },
     {
       "videoId": "",
-      "title": "Bottom Of Your Boots - Ella Langley",
-      "channel": "Ella Langley",
+      "title": "Boston - Stella Lefty",
+      "channel": "Stella Lefty",
       "duration": "—",
       "thumbnail": "",
-      "billboardRank": "20",
-      "billboardTitle": "Bottom Of Your Boots",
-      "billboardArtist": "Ella Langley"
+      "billboardRank": "13",
+      "billboardTitle": "Boston",
+      "billboardArtist": "Stella Lefty"
     },
     {
       "videoId": "",
-      "title": "Loving Life Again - Ella Langley",
-      "channel": "Ella Langley",
+      "title": "Risk It All - Bruno Mars",
+      "channel": "Bruno Mars",
       "duration": "—",
       "thumbnail": "",
-      "billboardRank": "21",
-      "billboardTitle": "Loving Life Again",
-      "billboardArtist": "Ella Langley"
-    },
-    {
-      "videoId": "",
-      "title": "Iloveitiloveitiloveit - Bella Kay",
-      "channel": "Bella Kay",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "22",
-      "billboardTitle": "Iloveitiloveitiloveit",
-      "billboardArtist": "Bella Kay"
-    },
-    {
-      "videoId": "",
-      "title": "E85 - Don Toliver",
-      "channel": "Don Toliver",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "23",
-      "billboardTitle": "E85",
-      "billboardArtist": "Don Toliver"
-    },
-    {
-      "videoId": "",
-      "title": "Be By You - Luke Combs",
-      "channel": "Luke Combs",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "24",
-      "billboardTitle": "Be By You",
-      "billboardArtist": "Luke Combs"
+      "billboardRank": "14",
+      "billboardTitle": "Risk It All",
+      "billboardArtist": "Bruno Mars"
     },
     {
       "videoId": "",
@@ -246,189 +146,19 @@
       "channel": "sombr",
       "duration": "—",
       "thumbnail": "",
-      "billboardRank": "25",
+      "billboardRank": "15",
       "billboardTitle": "Homewrecker",
       "billboardArtist": "sombr"
     },
     {
       "videoId": "",
-      "title": "Beauty And A Beat - Justin Bieber Featuring Nicki Minaj",
-      "channel": "Justin Bieber Featuring Nicki Minaj",
+      "title": "Stateside - PinkPantheress With Zara Larsson",
+      "channel": "PinkPantheress With Zara Larsson",
       "duration": "—",
       "thumbnail": "",
-      "billboardRank": "26",
-      "billboardTitle": "Beauty And A Beat",
-      "billboardArtist": "Justin Bieber Featuring Nicki Minaj"
-    },
-    {
-      "videoId": "",
-      "title": "Dandelion - Ella Langley",
-      "channel": "Ella Langley",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "27",
-      "billboardTitle": "Dandelion",
-      "billboardArtist": "Ella Langley"
-    },
-    {
-      "videoId": "",
-      "title": "Pinky Up - KATSEYE",
-      "channel": "KATSEYE",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "28",
-      "billboardTitle": "Pinky Up",
-      "billboardArtist": "KATSEYE"
-    },
-    {
-      "videoId": "",
-      "title": "The Fall - Cody Johnson",
-      "channel": "Cody Johnson",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "29",
-      "billboardTitle": "The Fall",
-      "billboardArtist": "Cody Johnson"
-    },
-    {
-      "videoId": "",
-      "title": "American Girls - Harry Styles",
-      "channel": "Harry Styles",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "30",
-      "billboardTitle": "American Girls",
-      "billboardArtist": "Harry Styles"
-    },
-    {
-      "videoId": "",
-      "title": "Body - Don Toliver",
-      "channel": "Don Toliver",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "31",
-      "billboardTitle": "Body",
-      "billboardArtist": "Don Toliver"
-    },
-    {
-      "videoId": "",
-      "title": "Pop Dat Thang - DaBaby",
-      "channel": "DaBaby",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "32",
-      "billboardTitle": "Pop Dat Thang",
-      "billboardArtist": "DaBaby"
-    },
-    {
-      "videoId": "",
-      "title": "Change My Mind - Riley Green",
-      "channel": "Riley Green",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "33",
-      "billboardTitle": "Change My Mind",
-      "billboardArtist": "Riley Green"
-    },
-    {
-      "videoId": "",
-      "title": "White Keys - Dominic Fike",
-      "channel": "Dominic Fike",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "34",
-      "billboardTitle": "White Keys",
-      "billboardArtist": "Dominic Fike"
-    },
-    {
-      "videoId": "",
-      "title": "Freakin' Out - Dexter And The Moonrocks",
-      "channel": "Dexter And The Moonrocks",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "35",
-      "billboardTitle": "Freakin' Out",
-      "billboardArtist": "Dexter And The Moonrocks"
-    },
-    {
-      "videoId": "",
-      "title": "Die On This Hill - Sienna Spiro",
-      "channel": "Sienna Spiro",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "36",
-      "billboardTitle": "Die On This Hill",
-      "billboardArtist": "Sienna Spiro"
-    },
-    {
-      "videoId": "",
-      "title": "Let 'Em Know - T.I.",
-      "channel": "T.I.",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "37",
-      "billboardTitle": "Let 'Em Know",
-      "billboardArtist": "T.I."
-    },
-    {
-      "videoId": "",
-      "title": "I Ain't Coming Back - Morgan Wallen Featuring Post Malone",
-      "channel": "Morgan Wallen Featuring Post Malone",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "38",
-      "billboardTitle": "I Ain't Coming Back",
-      "billboardArtist": "Morgan Wallen Featuring Post Malone"
-    },
-    {
-      "videoId": "",
-      "title": "Fever Dream - Alex Warren",
-      "channel": "Alex Warren",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "39",
-      "billboardTitle": "Fever Dream",
-      "billboardArtist": "Alex Warren"
-    },
-    {
-      "videoId": "",
-      "title": "Earrings - Malcolm Todd",
-      "channel": "Malcolm Todd",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "40",
-      "billboardTitle": "Earrings",
-      "billboardArtist": "Malcolm Todd"
-    },
-    {
-      "videoId": "",
-      "title": "When Did You Get Hot? - Sabrina Carpenter",
-      "channel": "Sabrina Carpenter",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "41",
-      "billboardTitle": "When Did You Get Hot?",
-      "billboardArtist": "Sabrina Carpenter"
-    },
-    {
-      "videoId": "",
-      "title": "Lush Life - Zara Larsson",
-      "channel": "Zara Larsson",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "42",
-      "billboardTitle": "Lush Life",
-      "billboardArtist": "Zara Larsson"
-    },
-    {
-      "videoId": "",
-      "title": "Motion Party - BossMan Dlow",
-      "channel": "BossMan Dlow",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "43",
-      "billboardTitle": "Motion Party",
-      "billboardArtist": "BossMan Dlow"
+      "billboardRank": "16",
+      "billboardTitle": "Stateside",
+      "billboardArtist": "PinkPantheress With Zara Larsson"
     },
     {
       "videoId": "",
@@ -436,9 +166,299 @@
       "channel": "Zara Larsson",
       "duration": "—",
       "thumbnail": "",
-      "billboardRank": "44",
+      "billboardRank": "17",
       "billboardTitle": "Midnight Sun",
       "billboardArtist": "Zara Larsson"
+    },
+    {
+      "videoId": "",
+      "title": "The Cure - Olivia Rodrigo",
+      "channel": "Olivia Rodrigo",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "18",
+      "billboardTitle": "The Cure",
+      "billboardArtist": "Olivia Rodrigo"
+    },
+    {
+      "videoId": "",
+      "title": "Spend Dat - Yung Miami",
+      "channel": "Yung Miami",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "19",
+      "billboardTitle": "Spend Dat",
+      "billboardArtist": "Yung Miami"
+    },
+    {
+      "videoId": "",
+      "title": "Be By You - Luke Combs",
+      "channel": "Luke Combs",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "20",
+      "billboardTitle": "Be By You",
+      "billboardArtist": "Luke Combs"
+    },
+    {
+      "videoId": "",
+      "title": "Don't We - Morgan Wallen",
+      "channel": "Morgan Wallen",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "21",
+      "billboardTitle": "Don't We",
+      "billboardArtist": "Morgan Wallen"
+    },
+    {
+      "videoId": "",
+      "title": "Earrings - Malcolm Todd",
+      "channel": "Malcolm Todd",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "22",
+      "billboardTitle": "Earrings",
+      "billboardArtist": "Malcolm Todd"
+    },
+    {
+      "videoId": "",
+      "title": "Shabang - Drake",
+      "channel": "Drake",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "23",
+      "billboardTitle": "Shabang",
+      "billboardArtist": "Drake"
+    },
+    {
+      "videoId": "",
+      "title": "Honeybee - Olivia Rodrigo",
+      "channel": "Olivia Rodrigo",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "24",
+      "billboardTitle": "Honeybee",
+      "billboardArtist": "Olivia Rodrigo"
+    },
+    {
+      "videoId": "",
+      "title": "Cinderella - Mac Miller Featuring Ty Dolla $ign",
+      "channel": "Mac Miller Featuring Ty Dolla $ign",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "25",
+      "billboardTitle": "Cinderella",
+      "billboardArtist": "Mac Miller Featuring Ty Dolla $ign"
+    },
+    {
+      "videoId": "",
+      "title": "Babydoll - Dominic Fike",
+      "channel": "Dominic Fike",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "26",
+      "billboardTitle": "Babydoll",
+      "billboardArtist": "Dominic Fike"
+    },
+    {
+      "videoId": "",
+      "title": "Sleepless In A Hotel Room - Luke Combs",
+      "channel": "Luke Combs",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "27",
+      "billboardTitle": "Sleepless In A Hotel Room",
+      "billboardArtist": "Luke Combs"
+    },
+    {
+      "videoId": "",
+      "title": "E85 - Don Toliver",
+      "channel": "Don Toliver",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "28",
+      "billboardTitle": "E85",
+      "billboardArtist": "Don Toliver"
+    },
+    {
+      "videoId": "",
+      "title": "American Girls - Harry Styles",
+      "channel": "Harry Styles",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "29",
+      "billboardTitle": "American Girls",
+      "billboardArtist": "Harry Styles"
+    },
+    {
+      "videoId": "",
+      "title": "My Body Isn't Ready - sombr",
+      "channel": "sombr",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "30",
+      "billboardTitle": "My Body Isn't Ready",
+      "billboardArtist": "sombr"
+    },
+    {
+      "videoId": "",
+      "title": "Maggots For Brains - Olivia Rodrigo",
+      "channel": "Olivia Rodrigo",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "31",
+      "billboardTitle": "Maggots For Brains",
+      "billboardArtist": "Olivia Rodrigo"
+    },
+    {
+      "videoId": "",
+      "title": "Chicago - Michael Jackson",
+      "channel": "Michael Jackson",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "32",
+      "billboardTitle": "Chicago",
+      "billboardArtist": "Michael Jackson"
+    },
+    {
+      "videoId": "",
+      "title": "Die On This Hill - Sienna Spiro",
+      "channel": "Sienna Spiro",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "33",
+      "billboardTitle": "Die On This Hill",
+      "billboardArtist": "Sienna Spiro"
+    },
+    {
+      "videoId": "",
+      "title": "Hit The Wall - Gracie Abrams",
+      "channel": "Gracie Abrams",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "34",
+      "billboardTitle": "Hit The Wall",
+      "billboardArtist": "Gracie Abrams"
+    },
+    {
+      "videoId": "",
+      "title": "Expectations - Olivia Rodrigo",
+      "channel": "Olivia Rodrigo",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "35",
+      "billboardTitle": "Expectations",
+      "billboardArtist": "Olivia Rodrigo"
+    },
+    {
+      "videoId": "",
+      "title": "Don't Tell On Me - Jason Aldean",
+      "channel": "Jason Aldean",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "36",
+      "billboardTitle": "Don't Tell On Me",
+      "billboardArtist": "Jason Aldean"
+    },
+    {
+      "videoId": "",
+      "title": "Freakin' Out - Dexter And The Moonrocks",
+      "channel": "Dexter And The Moonrocks",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "37",
+      "billboardTitle": "Freakin' Out",
+      "billboardArtist": "Dexter And The Moonrocks"
+    },
+    {
+      "videoId": "",
+      "title": "Ran To Atlanta - Drake Featuring Future & Molly Santana",
+      "channel": "Drake Featuring Future & Molly Santana",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "38",
+      "billboardTitle": "Ran To Atlanta",
+      "billboardArtist": "Drake Featuring Future & Molly Santana"
+    },
+    {
+      "videoId": "",
+      "title": "Pop Dat Thang - DaBaby",
+      "channel": "DaBaby",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "39",
+      "billboardTitle": "Pop Dat Thang",
+      "billboardArtist": "DaBaby"
+    },
+    {
+      "videoId": "",
+      "title": "What's Wrong With Me - Olivia Rodrigo & Robert Smith",
+      "channel": "Olivia Rodrigo & Robert Smith",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "40",
+      "billboardTitle": "What's Wrong With Me",
+      "billboardArtist": "Olivia Rodrigo & Robert Smith"
+    },
+    {
+      "videoId": "",
+      "title": "Change My Mind - Riley Green",
+      "channel": "Riley Green",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "41",
+      "billboardTitle": "Change My Mind",
+      "billboardArtist": "Riley Green"
+    },
+    {
+      "videoId": "",
+      "title": "My Way - Olivia Rodrigo",
+      "channel": "Olivia Rodrigo",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "42",
+      "billboardTitle": "My Way",
+      "billboardArtist": "Olivia Rodrigo"
+    },
+    {
+      "videoId": "",
+      "title": "Loving Life Again - Ella Langley",
+      "channel": "Ella Langley",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "43",
+      "billboardTitle": "Loving Life Again",
+      "billboardArtist": "Ella Langley"
+    },
+    {
+      "videoId": "",
+      "title": "What You Need - Tems",
+      "channel": "Tems",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "44",
+      "billboardTitle": "What You Need",
+      "billboardArtist": "Tems"
+    },
+    {
+      "videoId": "",
+      "title": "Beautiful Things - Megan Moroney",
+      "channel": "Megan Moroney",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "45",
+      "billboardTitle": "Beautiful Things",
+      "billboardArtist": "Megan Moroney"
+    },
+    {
+      "videoId": "",
+      "title": "Human Nature - Michael Jackson",
+      "channel": "Michael Jackson",
+      "duration": "—",
+      "thumbnail": "",
+      "billboardRank": "46",
+      "billboardTitle": "Human Nature",
+      "billboardArtist": "Michael Jackson"
     },
     {
       "videoId": "",
@@ -446,60 +466,40 @@
       "channel": "Noah Kahan",
       "duration": "—",
       "thumbnail": "",
-      "billboardRank": "45",
+      "billboardRank": "47",
       "billboardTitle": "The Great Divide",
       "billboardArtist": "Noah Kahan"
     },
     {
       "videoId": "",
-      "title": "Days Like These - Luke Combs",
-      "channel": "Luke Combs",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "46",
-      "billboardTitle": "Days Like These",
-      "billboardArtist": "Luke Combs"
-    },
-    {
-      "videoId": "",
-      "title": "Baby - Justin Bieber Featuring Ludacris",
-      "channel": "Justin Bieber Featuring Ludacris",
-      "duration": "—",
-      "thumbnail": "",
-      "billboardRank": "47",
-      "billboardTitle": "Baby",
-      "billboardArtist": "Justin Bieber Featuring Ludacris"
-    },
-    {
-      "videoId": "",
-      "title": "What You Saying - Lil Uzi Vert",
-      "channel": "Lil Uzi Vert",
+      "title": "u + me = <3 - Olivia Rodrigo",
+      "channel": "Olivia Rodrigo",
       "duration": "—",
       "thumbnail": "",
       "billboardRank": "48",
-      "billboardTitle": "What You Saying",
-      "billboardArtist": "Lil Uzi Vert"
+      "billboardTitle": "u + me = <3",
+      "billboardArtist": "Olivia Rodrigo"
     },
     {
       "videoId": "",
-      "title": "Brunette - Tucker Wetmore",
-      "channel": "Tucker Wetmore",
+      "title": "Iconic By Mistake - Le Sserafim, ILLIT & KATSEYE",
+      "channel": "Le Sserafim, ILLIT & KATSEYE",
       "duration": "—",
       "thumbnail": "",
       "billboardRank": "49",
-      "billboardTitle": "Brunette",
-      "billboardArtist": "Tucker Wetmore"
+      "billboardTitle": "Iconic By Mistake",
+      "billboardArtist": "Le Sserafim, ILLIT & KATSEYE"
     },
     {
       "videoId": "",
-      "title": "Runway - Lady Gaga & Doechii",
-      "channel": "Lady Gaga & Doechii",
+      "title": "2 Hard 4 The Radio - Drake",
+      "channel": "Drake",
       "duration": "—",
       "thumbnail": "",
       "billboardRank": "50",
-      "billboardTitle": "Runway",
-      "billboardArtist": "Lady Gaga & Doechii"
+      "billboardTitle": "2 Hard 4 The Radio",
+      "billboardArtist": "Drake"
     }
   ],
-  "timestamp": 1777154294949
+  "timestamp": 1783955822829
 }

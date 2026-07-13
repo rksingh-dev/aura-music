@@ -4,6 +4,8 @@ import { parseBillboardHot100 } from "@/utils/billboard_scraper";
 import { writeFileSync, readFileSync, existsSync } from "fs";
 import { join } from "path";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export const runtime = "nodejs";
 
 let topTracksCache: any[] = [];

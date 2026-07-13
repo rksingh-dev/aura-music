@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { parseYoutubeGlobalTopSongs } from "@/utils/youtube_global_charts_scraper";
+import { parseYoutubeBollywoodSongs } from "@/utils/youtube_bollywood_scraper";
 import { writeFileSync, readFileSync, existsSync } from "fs";
 import { join } from "path";
 
@@ -7,10 +7,10 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 export const runtime = "nodejs";
 
-let youtubeGlobalCache: any[] = [];
+let youtubeBollywoodCache: any[] = [];
 let cacheTimestamp: number | null = null;
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
-const CACHE_FILE = join(process.cwd(), "youtube_global_cache.json");
+const CACHE_FILE = join(process.cwd(), "youtube_bollywood_cache.json");
 
 function loadCache() {
   try {
@@ -18,23 +18,23 @@ function loadCache() {
       const raw = readFileSync(CACHE_FILE, "utf-8");
       const parsed = JSON.parse(raw);
       if (parsed.tracks && parsed.timestamp) {
-        youtubeGlobalCache = parsed.tracks;
+        youtubeBollywoodCache = parsed.tracks;
         cacheTimestamp = parsed.timestamp;
-        console.log("[/api/youtube-global] Loaded cache from file");
+        console.log("[/api/youtube-bollywood] Loaded cache from file");
       }
     }
   } catch (e) {
-    console.error("[/api/youtube-global] Error loading cache:", e);
+    console.error("[/api/youtube-bollywood] Error loading cache:", e);
   }
 }
 
 function saveCache() {
   try {
-    const data = { tracks: youtubeGlobalCache, timestamp: cacheTimestamp };
+    const data = { tracks: youtubeBollywoodCache, timestamp: cacheTimestamp };
     writeFileSync(CACHE_FILE, JSON.stringify(data, null, 2));
-    console.log("[/api/youtube-global] Saved cache to file");
+    console.log("[/api/youtube-bollywood] Saved cache to file");
   } catch (e) {
-    console.error("[/api/youtube-global] Error saving cache:", e);
+    console.error("[/api/youtube-bollywood] Error saving cache:", e);
   }
 }
 
@@ -47,16 +47,16 @@ export async function GET(req: NextRequest) {
   const now = Date.now();
   const isCacheValid = cacheTimestamp && now - cacheTimestamp < CACHE_DURATION;
 
-  if (isCacheValid && !forceRefresh && youtubeGlobalCache.length) {
-    console.log("[/api/youtube-global] Using cached data");
-    return NextResponse.json({ tracks: youtubeGlobalCache, cached: true }, { status: 200 });
+  if (isCacheValid && !forceRefresh && youtubeBollywoodCache.length) {
+    console.log("[/api/youtube-bollywood] Using cached data");
+    return NextResponse.json({ tracks: youtubeBollywoodCache, cached: true }, { status: 200 });
   }
 
   try {
-    console.log("[/api/youtube-global] Fetching fresh global top songs...");
-    const rawTracks = await parseYoutubeGlobalTopSongs();
+    console.log("[/api/youtube-bollywood] Fetching fresh bollywood top songs...");
+    const rawTracks = await parseYoutubeBollywoodSongs();
     if (rawTracks.length === 0) {
-      throw new Error("No tracks returned from global scraper");
+      throw new Error("No tracks returned from bollywood scraper");
     }
     const tracks = rawTracks.map(t => ({
       videoId: t.videoId,
@@ -64,19 +64,18 @@ export async function GET(req: NextRequest) {
       channel: t.artist,
       duration: "?",
       thumbnail: t.thumbnail || null,
-      billboardRank: t.rank,
       billboardTitle: t.title,
       billboardArtist: t.artist,
     }));
-    youtubeGlobalCache = tracks;
+    youtubeBollywoodCache = tracks;
     cacheTimestamp = now;
     saveCache();
     return NextResponse.json({ tracks, cached: false }, { status: 200 });
   } catch (e) {
-    console.error("[/api/youtube-global] Fetch error:", e);
-    if (youtubeGlobalCache.length) {
-      return NextResponse.json({ tracks: youtubeGlobalCache, cached: true, error: "Using stale cache" }, { status: 200 });
+    console.error("[/api/youtube-bollywood] Fetch error:", e);
+    if (youtubeBollywoodCache.length) {
+      return NextResponse.json({ tracks: youtubeBollywoodCache, cached: true, error: "Using stale cache" }, { status: 200 });
     }
-    return NextResponse.json({ error: "Failed to fetch YouTube global playlist" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to fetch YouTube bollywood playlist" }, { status: 500 });
   }
 }
